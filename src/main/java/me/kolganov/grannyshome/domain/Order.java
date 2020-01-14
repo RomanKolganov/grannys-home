@@ -7,14 +7,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "animals")
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Animal {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "description")
+    private String description;
 }

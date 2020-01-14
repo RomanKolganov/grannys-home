@@ -1,1 +1,35 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true
+  datasource:
+    sqlScriptEncoding: UTF-8
+    url: jdbc:h2:mem:testdb
+    initialization-mode: always
+#    url: jdbc:postgresql://localhost:5432/grannysHomeDb
+#    driverClassName: org.postgresql.Driver
+#    username: main_user
+#    password:
+#    initialization-mode: always
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health, logfile, info
+
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  application:
+    name: Granny's Home
+    description: application for finding places of animal overexposure
+    version: 1.0.RELEASE
+
+logging:
+  file: ./target/logs/grannysHome.log
