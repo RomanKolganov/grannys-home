@@ -19,4 +19,8 @@ public class Comment {
     private String title;
     @Column(name = "text")
     private String text;
+
+    @ManyToOne(targetEntity = AppUser.class)
+    @JoinColumn(name = "user_id")
+    private AppUser user;
 }
