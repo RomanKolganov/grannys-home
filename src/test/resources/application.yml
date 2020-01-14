@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true
+  datasource:
+    sqlScriptEncoding: UTF-8
+    url: jdbc:h2:mem:testdb
+    initialization-mode: always
