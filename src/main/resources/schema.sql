@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 CREATE TABLE IF NOT EXISTS user_accepted_orders (
     user_id bigint references users (id),
-    animal_id bigint references animals (id)
+    order_id bigint references orders (id)
 );
 CREATE TABLE IF NOT EXISTS comments (
     id bigserial,

@@ -1,10 +1,41 @@
 package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.UserService;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
+
+    @GetMapping(value = "/user", produces = "application/json")
+    public List<UserDto> getAllUsers() {
+        return userService.getAll().stream().map(UserDto::toDto).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/user/{id}", produces = "application/json")
+    public UserDto getUserById(@PathVariable("id") long id) {
+        return UserDto.toDto(userService.getById(id));
+    }
+
+    @PostMapping("/user")
+    public void createUser(@RequestBody UserDto userDto) {
+        userService.save(UserDto.toEntity(userDto));
+    }
+
+    @PutMapping("/user/{id}")
+    public void updateUser(@PathVariable("id") long id,
+                           @RequestBody UserDto userDto) {
+        userService.update(UserDto.toEntity(userDto));
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable("id") long id) {
+        userService.delete(id);
+    }
 }
