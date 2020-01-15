@@ -19,6 +19,11 @@ public class UserDto {
     }
 
     public static AppUser toEntity(UserDto userDto) {
-        return new AppUser(userDto.getId(), userDto.getName(), userDto.getLogin(), userDto.getPassword());
+        return AppUser.builder()
+                .id(userDto.getId())
+                .name(userDto.getName())
+                .login(userDto.getLogin())
+                .password(userDto.getPassword())
+                .build();
     }
 }
