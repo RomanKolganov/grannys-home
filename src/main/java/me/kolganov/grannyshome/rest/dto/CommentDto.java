@@ -34,7 +34,7 @@ public class CommentDto {
                 .id(commentDto.getId())
                 .title(commentDto.getTitle())
                 .text(commentDto.getText())
-                .user(AppUser.builder().id(commentDto.getId()).build())
+                .user(UserDto.toEntity(commentDto.getUserDto()))
                 .build();
     }
 }
