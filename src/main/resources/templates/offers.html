@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="webjars/Semantic-UI/2.4.1/semantic.css" rel="stylesheet">
+    <link href="webjars/datatables/1.10.20/css/dataTables.semanticui.css" rel="stylesheet">
+    <link href="webjars/datatables-buttons/1.6.1/css/buttons.semanticui.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="webjars/Semantic-UI/2.4.1/semantic.js"></script>
+    <script src="webjars/datatables/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="webjars/datatables/1.10.20/js/dataTables.semanticui.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/dataTables.buttons.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
+    <script src="js/main.js"></script>
+    <title>Предложения</title>
+</head>
+<body>
+<div class="ui container">
+    <h1 class="ui header">Предложения</h1>
+    <table id="table" class="ui table">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="addModal" class="ui modal">
+    <div class="header">Добавить новый заказ</div>
+    <div class="content">
+        <div class="ui form">
+            <div class="field">
+                <label>Заголовок</label>
+                <input id="titleAddInput" class="titleInput" type="text" name="title" placeholder="Введите заголовок">
+            </div>
+            <div class="field">
+                <label>Описание</label>
+                <textarea id="description"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button id="btnAdd" class="ui submit button">OK</button>
+        <div class="ui cancel button">Отмена</div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var table = $("#table").DataTable({
+            ajax: {
+                url: "order/",
+                type: "GET",
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "id"},
+                {"data": "title"}
+            ],
+            lengthChange: false
+        });
+        new $.fn.dataTable.Buttons(table, [{
+                text: '<i class="plus icon"></i>Добавить',
+                action: function () {
+                    $("#addModal").modal('show');
+                }
+            }
+        ]);
+
+        table.buttons().container()
+            .appendTo($('div.eight.column:eq(0)', table.table().container()));
+        
+        $("#btnAdd").on("click", function () {
+            var title = $("#titleAddInput").val();
+            var description = $("#description").val();
+
+            if (title !== "" && description !== "") {
+                var data = {
+                    "title": title,
+                    "description": description
+                };
+                createEntity("order/", data, $("#table"));
+                $("#addModal").modal('hide');
+                $("#title").val("");
+                $("#description").val("");
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -22,6 +22,6 @@ public class Animal {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @OneToOne(mappedBy = "animal")
+    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL)
     private Order order;
 }
