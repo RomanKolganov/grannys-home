@@ -1,6 +1,8 @@
 package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.domain.Comment;
 import me.kolganov.grannyshome.rest.dto.CommentDto;
 import me.kolganov.grannyshome.service.CommentService;
 import org.springframework.stereotype.Controller;
@@ -26,8 +28,10 @@ public class CommentController {
     }
 
     @PostMapping("/comment")
-    public void createComment(@RequestBody CommentDto commentDto) {
-        commentService.save(CommentDto.toEntity(commentDto));
+    public void createComment(@RequestBody CommentDto commentDto, Principal principal) {
+        Comment comment = CommentDto.toEntity(commentDto);
+        comment.setUserFrom(AppUser.builder().login(principal.getName()).build());
+        commentService.save(comment);
     }
 
     @PutMapping("/comment/{id}")

@@ -34,9 +34,9 @@ class CommentControllerTest {
         AppUser user1 = AppUser.builder().id(1L).name("Name 1").login("login 1").password("password 1").build();
         AppUser user2 = AppUser.builder().id(2L).name("Name 2").login("login 2").password("password 2").build();
 
-        Comment comment1 = Comment.builder().id(1L).title("Test title 1").text("Test text 1").userTo(user1).build();
-        Comment comment2 = Comment.builder().id(2L).title("Test title 2").text("Test text 2").userTo(user1).build();
-        Comment comment3 = Comment.builder().id(3L).title("Test title 3").text("Test text 3").userTo(user2).build();
+        Comment comment1 = Comment.builder().id(1L).text("Test text 1").userTo(user1).build();
+        Comment comment2 = Comment.builder().id(2L).text("Test text 2").userTo(user1).build();
+        Comment comment3 = Comment.builder().id(3L).text("Test text 3").userTo(user2).build();
 
         comments.add(comment1);
         comments.add(comment2);

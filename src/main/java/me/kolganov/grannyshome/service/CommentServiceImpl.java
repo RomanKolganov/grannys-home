@@ -30,10 +30,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void save(Comment comment) {
-        Optional<AppUser> user = userDao.findById(comment.getUserTo().getId());
-        user.ifPresent(u -> {
-            comment.setUserTo(u);
-            commentDao.save(comment);
+        Optional<AppUser> userTo = userDao.findById(comment.getUserTo().getId());
+        Optional<AppUser> userFrom = userDao.findByLogin(comment.getUserFrom().getLogin());
+
+        userTo.ifPresent(ut -> {
+            comment.setUserTo(ut);
+            userFrom.ifPresent(uf -> {
+                comment.setUserFrom(uf);
+                commentDao.save(comment);
+            });
         });
     }
 
@@ -41,7 +46,6 @@ public class CommentServiceImpl implements CommentService {
     public void update(Comment comment) {
         Optional<Comment> oldComment = commentDao.findById(comment.getId());
         oldComment.ifPresent(c -> {
-            c.setTitle(comment.getTitle());
             c.setText(comment.getText());
             commentDao.save(c);
         });

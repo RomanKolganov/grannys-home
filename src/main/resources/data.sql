@@ -17,9 +17,9 @@ values ('Дракон', 'Обязательно заставлять летат�
 insert into user_accepted_orders (user_id, order_id) values (2, 1);
 insert into user_accepted_orders (user_id, order_id) values (3, 1);
 
-insert into comments (title, text, user_id_to, user_id_from) values ('Очень плохо кормит', 'Сам жрет собачий корм и не дает его собаке', 2, 1);
-insert into comments (title, text, user_id_to, user_id_from) values ('Просто лучший', 'Исполняет на высшем уровне', 3, 2);
-insert into comments (title, text, user_id_to, user_id_from) values ('Все классно делает', 'Погулял. Помыл. Покормил. И кота тоже.', 3, 4);
+insert into comments (text, user_id_to, user_id_from) values ('Сам жрет собачий корм и не дает его собаке', 2, 1);
+insert into comments (text, user_id_to, user_id_from) values ('Исполняет на высшем уровне', 3, 2);
+insert into comments (text, user_id_to, user_id_from) values ('Погулял. Помыл. Покормил. И кота тоже.', 3, 4);
 
 insert into roles (role) values ('USER');
 insert into roles (role) values ('ADMIN');

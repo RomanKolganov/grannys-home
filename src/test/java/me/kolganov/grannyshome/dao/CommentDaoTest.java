@@ -30,14 +30,12 @@ class CommentDaoTest {
         appUserDao.save(appUser);
 
         Comment comment = new Comment();
-        comment.setTitle("Хорошо ладит с лошадьми");
         comment.setText("Заставляет шевелиться любую лошадь");
         comment.setUserTo(appUser);
         commentDao.save(comment);
 
         Comment actualComment = em.find(Comment.class, comment.getId());
         assertThat(actualComment).isNotNull()
-                .matches(s -> s.getTitle().equals(comment.getTitle()))
                 .matches(s -> s.getText().equals(comment.getText()))
                 .matches(s -> s.getUserTo().getId().equals(appUser.getId()));
     }

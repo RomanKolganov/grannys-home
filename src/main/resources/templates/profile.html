@@ -30,6 +30,12 @@
         <div class="ui comments">
             <h3 class="ui dividing header">Комментарии</h3>
             <div id="comments"></div>
+            <div class="ui reply form">
+                <div class="field">
+                    <textarea id="commentTextarea"></textarea>
+                </div>
+                <div class="ui primary submit labeled icon button" onclick="addComment()"><i class="icon edit"></i>Оставить комментарий</div>
+            </div>
         </div>
     </div>
 </div>
@@ -74,6 +80,24 @@
             },
             error: function() {
                 $('#accessDeniedSidebar').sidebar('toggle');
+            }
+        });
+    }
+
+    function addComment() {
+        var text = $("#commentTextarea").val();
+        var userTo = {"id": [[${id}]]};
+        var data = {"text": text, "userTo": userTo};
+        
+        $.ajax({
+            url: "comment",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function() {
+                clearComments();
+                loadComments();
+                $("#commentTextarea").val('');
             }
         });
     }

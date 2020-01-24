@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS user_accepted_orders (
 );
 CREATE TABLE IF NOT EXISTS comments (
     id bigserial,
-    title varchar(50),
     text varchar(500),
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
