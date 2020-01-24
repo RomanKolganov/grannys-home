@@ -19,7 +19,7 @@ public class OrderDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("title") private String title;
     @JsonProperty("description") private String description;
-    @JsonProperty("expiration_date") private Date expirationDate;
+    @JsonProperty("date_creation") private Date dateCreation;
     @JsonProperty("animal") private AnimalDto animalDto;
     @JsonProperty("user") private UserDto userDto;
 
@@ -28,7 +28,7 @@ public class OrderDto {
                 .id(order.getId())
                 .title(order.getTitle())
                 .description(order.getDescription())
-                .expirationDate(order.getExpirationDate())
+                .dateCreation(order.getDateCreation())
                 .animalDto(AnimalDto.toDto(order.getAnimal()))
                 .userDto(UserDto.toDto(order.getUser()))
                 .build();
@@ -39,7 +39,7 @@ public class OrderDto {
                 .id(orderDto.getId())
                 .title(orderDto.getTitle())
                 .description(orderDto.getDescription())
-                .expirationDate(orderDto.getExpirationDate())
+                .dateCreation(orderDto.getDateCreation())
                 .animal(AnimalDto.toEntity(orderDto.getAnimalDto()))
                 .user(UserDto.toEntity(orderDto.getUserDto()))
                 .build();

@@ -5,8 +5,10 @@ import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.dao.CommentDao;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Comment;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +30,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void save(Comment comment) {
-        Optional<AppUser> user = userDao.findById(comment.getUser().getId());
+        Optional<AppUser> user = userDao.findById(comment.getUserTo().getId());
         user.ifPresent(u -> {
-            comment.setUser(u);
+            comment.setUserTo(u);
             commentDao.save(comment);
         });
     }
@@ -46,7 +48,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(long id) {
-        commentDao.deleteById(id);
+    public void delete(long id, Principal principal) {
+        Optional<Comment> comment = commentDao.findById(id);
+        if (comment.isPresent()) {
+            if (principal.getName().equals(comment.get().getUserFrom().getLogin()))
+                commentDao.deleteById(comment.get().getId());
+            else
+                throw new AccessDeniedException("The user " + principal.getName() + "have no permissions to delete comment from user " + comment.get().getUserFrom().getLogin());
+        }
     }
 }

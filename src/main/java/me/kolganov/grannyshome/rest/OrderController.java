@@ -13,6 +13,13 @@ import java.util.stream.Collectors;
 public class OrderController {
     private final OrderService orderService;
 
+    @GetMapping("/order/{page_number}/{size}/{field}")
+    public List<OrderDto> getAllOrders(@PathVariable("page_number") int pageNumber,
+                                       @PathVariable("size") int size,
+                                       @PathVariable("field") String field) {
+        return orderService.getAll(pageNumber, size, field).stream().map(OrderDto::toDto).collect(Collectors.toList());
+    }
+
     @GetMapping("/order")
     public List<OrderDto> getAllOrders() {
         return orderService.getAll().stream().map(OrderDto::toDto).collect(Collectors.toList());

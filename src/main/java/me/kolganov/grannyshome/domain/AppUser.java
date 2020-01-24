@@ -20,15 +20,17 @@ public class AppUser {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "login")
+    @Column(name = "login", unique = true, nullable = false)
     private String login;
     @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "user")
     private List<Order> createdOrders;
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "userTo")
+    private List<Comment> commentsTo;
+    @OneToMany(mappedBy = "userFrom")
+    private List<Comment> commentsFrom;
 
     @ManyToMany
     @JoinTable(
@@ -36,4 +38,10 @@ public class AppUser {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> acceptedOrders;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 }

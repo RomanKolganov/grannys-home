@@ -7,8 +7,13 @@ import me.kolganov.grannyshome.dao.OrderDao;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +23,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
     private final AppUserDao userDao;
     private final AnimalDao animalDao;
+
+    @Override
+    public List<Order> getAll(int pageNumber, int size, String field) {
+        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(field));
+        Page<Order> orders = orderDao.findAll(pageable);
+        return orders.getContent();
+    }
 
     @Override
     public List<Order> getAll() {
@@ -37,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         if (user.isPresent() && animal.isPresent()) {
             order.setUser(user.get());
             order.setAnimal(animal.get());
+            order.setDateCreation(new Date(System.currentTimeMillis()));
             orderDao.save(order);
         }
     }
@@ -47,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         oldOrder.ifPresent(o -> {
             o.setTitle(order.getTitle());
             o.setDescription(order.getDescription());
-            o.setExpirationDate(order.getExpirationDate());
+            o.setDateCreation(order.getDateCreation());
             orderDao.save(o);
         });
     }

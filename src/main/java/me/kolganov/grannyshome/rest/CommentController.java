@@ -6,6 +6,7 @@ import me.kolganov.grannyshome.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/comment/{id}")
-    public void deleteComment(@PathVariable("id") long id) {
-        commentService.delete(id);
+    public void deleteComment(@PathVariable("id") long id, Principal principal) {
+        commentService.delete(id, principal);
     }
 }

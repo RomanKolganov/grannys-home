@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="webjars/Semantic-UI/2.4.1/semantic.css" rel="stylesheet">
+    <link href="webjars/datatables/1.10.20/css/dataTables.semanticui.css" rel="stylesheet">
+    <link href="webjars/datatables-buttons/1.6.1/css/buttons.semanticui.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="webjars/Semantic-UI/2.4.1/semantic.js"></script>
+    <script src="webjars/datatables/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="webjars/datatables/1.10.20/js/dataTables.semanticui.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/dataTables.buttons.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
+    <script src="js/main.js"></script>
+    <title>Профиль</title>
+</head>
+<body>
+<div th:insert="~{accessDenied :: accessDenied}"></div>
+<div class="ui container">
+    <h1 class="ui header">Профиль</h1>
+    <div class="ui segment">
+        <h3 class="ui header">Обо мне</h3>
+        <div class="ui form">
+            <div class="field">
+                <label>Имя</label>
+                <input id="first_name" type="text" name="first_name" placeholder="Имя">
+            </div>
+            <div class="field">
+                <label>Фамилия</label>
+                <input id="last_name" type="text" name="last_name" placeholder="Фамилия">
+            </div>
+        </div>
+    </div>
+    <div class="ui segment">
+        <h3 class="ui header">Мои питомцы</h3>
+        <table id="table" class="ui table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="addModal" class="ui modal">
+    <div class="header">Добавить питомца</div>
+    <div class="content">
+        <div class="ui form">
+            <div class="field">
+                <label>Кличка</label>
+                <input id="nameAddInput" class="nameInput" type="text" name="name" placeholder="Введите кличку питомца">
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button id="btnAdd" class="ui submit button">OK</button>
+        <div class="ui cancel button">Отмена</div>
+    </div>
+</div>
+<div id="editModal" class="ui modal">
+    <div class="header">Редактировать информацию о питомце</div>
+    <div class="content">
+        <div class="ui form">
+            <input id="nameIdUpdate" type="hidden" name="id">
+            <div class="field">
+                <label>Кличка</label>
+                <input id="nameUpdateInput" class="nameInput" type="text" name="name" placeholder="Введите кличку питомца">
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button id="btnSave" class="ui button">OK</button>
+        <div class="ui cancel button">Отмена</div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var table = $("#table").DataTable({
+            ajax: {
+                url: "animal/",
+                type: "GET",
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "id"},
+                {"data": "name"},
+                {
+                    "data": "",
+                    "render": function (data, type, row) {
+                        return  '<button class="ui button" onclick=deleteEntity("animal/'+row.id+'",$("#table"));>' +
+                                    '<i class="ui close icon"></i>Удалить' +
+                                '</button>' +
+                                '<button class="ui button" onclick=\'showModal('+row.id+',\"'+row.name+'\");\'>' +
+                                    '<i class="ui cogs icon"></i>Ред.' +
+                                '</button>';
+                    }
+                }
+            ],
+            lengthChange: false
+        });
+        new $.fn.dataTable.Buttons(table, [{
+                text: '<i class="plus icon"></i>Добавить',
+                action: function () {
+                    $("#addModal").modal('show');
+                }
+            }
+        ]);
+
+        table.buttons().container()
+            .appendTo($('div.eight.column:eq(0)', table.table().container()));
+
+        $("#btnAdd").on("click", function () {
+            var name = $("#nameAddInput").val();
+
+            if (name !== "") {
+                var data = {
+                    "name": name
+                };
+                createEntity("animal/", data, $("#table"));
+                $("#addModal").modal('hide');
+                $("#name").val("");
+            }
+        });
+
+        $("#btnSave").on("click", function () {
+            var id = $("#nameIdUpdate").val();
+            var name = $("#nameUpdateInput").val();
+
+            if (name !== "") {
+                var data = {
+                    "id": id,
+                    "name": name
+                };
+                updateEntity("animal/"+id, data, $("#table"));
+                $("#editModal").modal('hide');
+            }
+        });
+    });
+
+    function showModal(id, name, author_id, genre_id) {
+        $("#nameIdUpdate").val(id);
+        $("#nameUpdateInput").val(name);
+
+        $("#editModal").modal('show');
+    }
+</script>
+</body>
+</html>

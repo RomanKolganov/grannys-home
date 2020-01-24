@@ -2,6 +2,7 @@ package me.kolganov.grannyshome.service;
 
 import me.kolganov.grannyshome.domain.Comment;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface CommentService {
@@ -9,5 +10,5 @@ public interface CommentService {
     Comment getById(long id);
     void save(Comment comment);
     void update(Comment comment);
-    void delete(long id);
+    void delete(long id, Principal principal);
 }

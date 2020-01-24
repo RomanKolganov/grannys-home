@@ -9,9 +9,9 @@ spring:
     sqlScriptEncoding: UTF-8
     url: jdbc:h2:mem:testdb
     initialization-mode: always
-#    url: jdbc:postgresql://localhost:5432/grannysHomeDb
+#    url: jdbc:postgresql://localhost:5432/app_db
 #    driverClassName: org.postgresql.Driver
-#    username: main_user
+#    username: app_user
 #    password:
 #    initialization-mode: always
 

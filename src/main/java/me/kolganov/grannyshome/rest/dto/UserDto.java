@@ -2,11 +2,11 @@ package me.kolganov.grannyshome.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.kolganov.grannyshome.domain.AppUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,8 +18,21 @@ public class UserDto {
     @JsonProperty("name") private String name;
     @JsonProperty("login") private String login;
     @JsonProperty("password") private String password;
+    @JsonProperty("comments") private List<CommentDto> commentDtoList;
 
     public static UserDto toDto(AppUser user) {
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        user.getCommentsTo().forEach(c -> commentDtoList.add(CommentDto.toDto(c)));
+        return UserDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .login(user.getLogin())
+                .password(user.getPassword())
+                .commentDtoList(commentDtoList)
+                .build();
+    }
+
+    public static UserDto toNoCommentsDto(AppUser user) {
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())

@@ -2,10 +2,7 @@ package me.kolganov.grannyshome.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Comment;
 
@@ -18,14 +15,14 @@ public class CommentDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("title") private String title;
     @JsonProperty("text") private String text;
-    @JsonProperty("user") private UserDto userDto;
+    @JsonProperty("userFrom") private UserDto userDtoFrom;
 
     public static CommentDto toDto(Comment comment) {
         return CommentDto.builder()
                 .id(comment.getId())
                 .title(comment.getTitle())
                 .text(comment.getText())
-                .userDto(UserDto.toDto(comment.getUser()))
+                .userDtoFrom(UserDto.toNoCommentsDto(comment.getUserFrom()))
                 .build();
     }
 
@@ -34,7 +31,6 @@ public class CommentDto {
                 .id(commentDto.getId())
                 .title(commentDto.getTitle())
                 .text(commentDto.getText())
-                .user(UserDto.toEntity(commentDto.getUserDto()))
                 .build();
     }
 }

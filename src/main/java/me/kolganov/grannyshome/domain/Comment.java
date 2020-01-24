@@ -23,6 +23,9 @@ public class Comment {
     private String text;
 
     @ManyToOne(targetEntity = AppUser.class)
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    @JoinColumn(name = "user_id_to")
+    private AppUser userTo;
+    @ManyToOne(targetEntity = AppUser.class)
+    @JoinColumn(name = "user_id_from")
+    private AppUser userFrom;
 }

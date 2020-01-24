@@ -16,6 +16,7 @@
     <title>Предложения</title>
 </head>
 <body>
+<div th:insert="~{accessDenied :: accessDenied}"></div>
 <div class="ui container">
     <h1 class="ui header">Предложения</h1>
     <table id="table" class="ui table">
@@ -23,6 +24,7 @@
         <tr>
             <th>id</th>
             <th>title</th>
+            <th>date_creation</th>
         </tr>
         </thead>
     </table>
@@ -56,7 +58,8 @@
             },
             columns: [
                 {"data": "id"},
-                {"data": "title"}
+                {"data": "title"},
+                {"data": "date_creation"}
             ],
             lengthChange: false
         });

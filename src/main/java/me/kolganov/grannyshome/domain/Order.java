@@ -23,8 +23,8 @@ public class Order {
     private String title;
     @Column(name = "description")
     private String description;
-    @Column(name = "expiration_date")
-    private Date expirationDate;
+    @Column(name = "date_creation")
+    private Date dateCreation;
 
     @OneToOne
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
