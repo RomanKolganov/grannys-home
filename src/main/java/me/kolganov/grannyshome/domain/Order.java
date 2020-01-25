@@ -32,6 +32,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private AppUser user;
 
-    @ManyToMany(mappedBy = "acceptedOrders")
-    private List<AppUser> users;
+    @OneToMany(mappedBy = "order")
+    private List<AcceptedOrder> acceptedOrders;
 }

@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS orders (
     primary key (id)
 );
 CREATE TABLE IF NOT EXISTS user_accepted_orders (
+    id bigserial,
     user_id bigint references users (id),
     order_id bigint references orders (id)
 );

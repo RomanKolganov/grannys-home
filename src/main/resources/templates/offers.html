@@ -24,8 +24,10 @@
         <tr>
             <th>id</th>
             <th>Заказ</th>
+            <th>Описание</th>
             <th>Пользователь</th>
             <th>Питомец</th>
+            <th></th>
         </tr>
         </thead>
     </table>
@@ -68,8 +70,18 @@
             columns: [
                 {"data": "id"},
                 {"data": "title"},
+                {"data": "description"},
                 {"data": "user.name"},
-                {"data": "animal.name"}
+                {"data": "animal.name"},
+                {
+                    "data": null,
+                    render: function(data) {
+                        return '<button class="ui button" onClick=acceptOrder('+data.id+');>Взять</button>';
+                    }
+                }
+            ],
+            columnDefs: [
+                {"targets": [0], "visible": false, "searchable": false},
             ],
             lengthChange: false
         });
@@ -102,6 +114,12 @@
             }
         });
     });
+
+    function acceptOrder(orderId) {
+        var order = {"id": orderId};
+        var data = {"order": order};
+        createEntity("order/accept", data, $("#table"));
+    }
 </script>
 </body>
 </html>

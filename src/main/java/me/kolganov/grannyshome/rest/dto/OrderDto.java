@@ -42,4 +42,8 @@ public class OrderDto {
                 .build();
 
     }
+
+    public static Order toJustOrderEntity(OrderDto orderDto) {
+        return Order.builder().id(orderDto.getId()).build();
+    }
 }

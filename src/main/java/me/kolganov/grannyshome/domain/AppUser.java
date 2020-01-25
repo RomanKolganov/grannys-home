@@ -34,14 +34,10 @@ public class AppUser {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
-
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(
-            name = "user_accepted_orders",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> acceptedOrders;
+    @OneToMany(mappedBy = "user")
+    private List<AcceptedOrder> acceptedOrders;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

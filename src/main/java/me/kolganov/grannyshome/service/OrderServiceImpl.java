@@ -1,9 +1,11 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.dao.AcceptedOrderDao;
 import me.kolganov.grannyshome.dao.AnimalDao;
 import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.dao.OrderDao;
+import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
@@ -22,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
     private final AppUserDao userDao;
     private final AnimalDao animalDao;
+    private final AcceptedOrderDao acceptedOrderDao;
 
     @Override
     public List<Order> getAll(int pageNumber, int size, String field) {
@@ -50,6 +53,19 @@ public class OrderServiceImpl implements OrderService {
             order.setAnimal(animal.get());
             orderDao.save(order);
         }
+    }
+
+    @Override
+    public void save(AcceptedOrder acceptedOrder) {
+        Optional<Order> order = orderDao.findById(acceptedOrder.getOrder().getId());
+        Optional<AppUser> user = userDao.findByLogin(acceptedOrder.getUser().getLogin());
+        order.ifPresent(o -> {
+            acceptedOrder.setOrder(o);
+            user.ifPresent(u -> {
+                acceptedOrder.setUser(u);
+                acceptedOrderDao.save(acceptedOrder);
+            });
+        });
     }
 
     @Override

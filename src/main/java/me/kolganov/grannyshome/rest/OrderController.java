@@ -1,7 +1,9 @@
 package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
+import me.kolganov.grannyshome.rest.dto.AcceptedOrderDto;
 import me.kolganov.grannyshome.rest.dto.OrderDto;
 import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.OrderService;
@@ -37,6 +39,12 @@ public class OrderController {
     public void createOrder(@RequestBody OrderDto orderDto, Principal principal) {
         orderDto.setUserDto(UserDto.builder().login(principal.getName()).build());
         orderService.save(OrderDto.toEntity(orderDto));
+    }
+
+    @PostMapping("/order/accept")
+    public void acceptOrder(@RequestBody AcceptedOrderDto acceptedOrderDto, Principal principal) {
+        acceptedOrderDto.setUserDto(UserDto.builder().login(principal.getName()).build());
+        orderService.save(AcceptedOrderDto.toEntity(acceptedOrderDto));
     }
 
     @PutMapping("/order/{id}")
