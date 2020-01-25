@@ -8,8 +8,8 @@ import java.security.Principal;
 import java.util.List;
 
 public interface UserService {
-    List<Animal> getAllCurrentUserAnimals(Principal principal);
-    AppUser getCurrentUser(Principal principal);
+    List<Animal> getAllCurrentUserAnimals(String login);
+    AppUser getCurrentUser(String login);
     List<AppUser> getAll();
     AppUser getById(long id);
     void save(AppUser user);

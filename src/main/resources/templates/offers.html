@@ -23,8 +23,9 @@
         <thead>
         <tr>
             <th>id</th>
-            <th>title</th>
-            <th>date_creation</th>
+            <th>Заказ</th>
+            <th>Пользователь</th>
+            <th>Питомец</th>
         </tr>
         </thead>
     </table>
@@ -37,6 +38,14 @@
                 <label>Заголовок</label>
                 <input id="titleAddInput" class="titleInput" type="text" name="title" placeholder="Введите заголовок">
             </div>
+            <select id="animalSelect" class="ui fluid selection dropdown">
+                <option value="">Выберите питомца</option>
+                <option th:each="animal : ${animals}"
+                        th:value="${animal.id}"
+                        th:text="${animal.name}">
+                    Питомец
+                </option>
+            </select>
             <div class="field">
                 <label>Описание</label>
                 <textarea id="description"></textarea>
@@ -59,7 +68,8 @@
             columns: [
                 {"data": "id"},
                 {"data": "title"},
-                {"data": "date_creation"}
+                {"data": "user.name"},
+                {"data": "animal.name"}
             ],
             lengthChange: false
         });
@@ -77,11 +87,13 @@
         $("#btnAdd").on("click", function () {
             var title = $("#titleAddInput").val();
             var description = $("#description").val();
+            var animal = {"id": $("#animalSelect").val()};
 
-            if (title !== "" && description !== "") {
+            if (title !== "" && description !== "" && animal != null) {
                 var data = {
                     "title": title,
-                    "description": description
+                    "description": description,
+                    "animal": animal
                 };
                 createEntity("order/", data, $("#table"));
                 $("#addModal").modal('hide');

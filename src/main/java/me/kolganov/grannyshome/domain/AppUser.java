@@ -1,9 +1,6 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,15 +22,20 @@ public class AppUser {
     @Column(name = "password")
     private String password;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Order> createdOrders;
+    @ToString.Exclude
     @OneToMany(mappedBy = "userTo")
     private List<Comment> commentsTo;
+    @ToString.Exclude
     @OneToMany(mappedBy = "userFrom")
     private List<Comment> commentsFrom;
+    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "user_accepted_orders",

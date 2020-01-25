@@ -17,14 +17,14 @@ public class UserServiceImpl implements UserService {
     private final AppUserDao userDao;
 
     @Override
-    public List<Animal> getAllCurrentUserAnimals(Principal principal) {
-        Optional<AppUser> user = userDao.findByLogin(principal.getName());
+    public List<Animal> getAllCurrentUserAnimals(String login) {
+        Optional<AppUser> user = userDao.findByLogin(login);
         return user.map(AppUser::getAnimals).orElse(null);
     }
 
     @Override
-    public AppUser getCurrentUser(Principal principal) {
-        Optional<AppUser> user = userDao.findByLogin(principal.getName());
+    public AppUser getCurrentUser(String login) {
+        Optional<AppUser> user = userDao.findByLogin(login);
         return user.orElse(null);
     }
 

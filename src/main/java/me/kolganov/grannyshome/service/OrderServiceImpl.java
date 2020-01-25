@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,13 +42,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(Order order) {
-        Optional<AppUser> user = userDao.findById(order.getUser().getId());
+        Optional<AppUser> user = userDao.findByLogin(order.getUser().getLogin());
         Optional<Animal> animal = animalDao.findById(order.getAnimal().getId());
 
         if (user.isPresent() && animal.isPresent()) {
             order.setUser(user.get());
             order.setAnimal(animal.get());
-            order.setDateCreation(new Date(System.currentTimeMillis()));
             orderDao.save(order);
         }
     }
@@ -60,7 +58,6 @@ public class OrderServiceImpl implements OrderService {
         oldOrder.ifPresent(o -> {
             o.setTitle(order.getTitle());
             o.setDescription(order.getDescription());
-            o.setDateCreation(order.getDateCreation());
             orderDao.save(o);
         });
     }

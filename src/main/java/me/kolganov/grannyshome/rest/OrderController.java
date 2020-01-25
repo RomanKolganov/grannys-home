@@ -1,10 +1,13 @@
 package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.domain.Order;
 import me.kolganov.grannyshome.rest.dto.OrderDto;
+import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +34,8 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public void createOrder(@RequestBody OrderDto orderDto) {
+    public void createOrder(@RequestBody OrderDto orderDto, Principal principal) {
+        orderDto.setUserDto(UserDto.builder().login(principal.getName()).build());
         orderService.save(OrderDto.toEntity(orderDto));
     }
 

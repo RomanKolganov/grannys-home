@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    $(".ui.fluid.selection.dropdown").dropdown({
+        clearable: true
+    });
+});
+
 function deleteEntity(url, table) {
     $.ajax({
         url: url,

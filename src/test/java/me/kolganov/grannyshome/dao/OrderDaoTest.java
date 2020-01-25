@@ -44,7 +44,6 @@ class OrderDaoTest {
         Order order = new Order();
         order.setTitle("Отдам лошадь на недельку. Можно кататься!!!");
         order.setDescription("Самовывоз! С меня корм. Обязательно 2 раза в день выгуливать. Кататься осторожно.");
-        order.setDateCreation(parseDate("14.02.2020"));
         order.setUser(appUser);
         order.setAnimal(animal);
         orderDao.save(order);

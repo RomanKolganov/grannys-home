@@ -1,9 +1,6 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +17,8 @@ public class Role {
     private long id;
     @Column(name = "role")
     private String role;
+
+    @ToString.Exclude
     @ManyToMany(mappedBy = "roles")
     private List<AppUser> appUsers;
 }

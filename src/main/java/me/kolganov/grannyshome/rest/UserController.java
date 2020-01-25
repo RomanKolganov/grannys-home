@@ -17,12 +17,12 @@ public class UserController {
 
     @GetMapping(value = "/user/animals", produces = "application/json")
     public List<AnimalDto> getAllUserAnimals(Principal principal) {
-        return userService.getAllCurrentUserAnimals(principal).stream().map(AnimalDto::toDto).collect(Collectors.toList());
+        return userService.getAllCurrentUserAnimals(principal.getName()).stream().map(AnimalDto::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/user/current", produces = "application/json")
     public UserDto getCurrentUser(Principal principal) {
-        return UserDto.toNoCommentsDto(userService.getCurrentUser(principal));
+        return UserDto.toNoCommentsDto(userService.getCurrentUser(principal.getName()));
     }
 
     @GetMapping(value = "/user", produces = "application/json")

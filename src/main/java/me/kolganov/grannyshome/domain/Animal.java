@@ -1,9 +1,6 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -20,9 +17,11 @@ public class Animal {
     @Column(name = "name")
     private String name;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL)
     private Order order;
 
+    @ToString.Exclude
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id")
     private AppUser user;

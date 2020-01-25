@@ -41,11 +41,11 @@ class OrderControllerTest {
         Animal animal2 = Animal.builder().id(2L).name("Test animal name 2").build();
         Animal animal3 = Animal.builder().id(3L).name("Test animal name 3").build();
 
-        Order order1 = Order.builder().id(1L).title("Test title 1").description("Test description 1").dateCreation(date)
+        Order order1 = Order.builder().id(1L).title("Test title 1").description("Test description 1")
                 .animal(animal1).user(user1).build();
-        Order order2 = Order.builder().id(2L).title("Test title 2").description("Test description 2").dateCreation(date)
+        Order order2 = Order.builder().id(2L).title("Test title 2").description("Test description 2")
                 .animal(animal2).user(user2).build();
-        Order order3 = Order.builder().id(3L).title("Test title 3").description("Test description 3").dateCreation(date)
+        Order order3 = Order.builder().id(3L).title("Test title 3").description("Test description 3")
                 .animal(animal3).user(user1).build();
         orders.add(order1);
         orders.add(order2);
