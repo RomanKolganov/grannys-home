@@ -19,18 +19,20 @@
 <div th:insert="~{accessDenied :: accessDenied}"></div>
 <div class="ui container">
     <h1 class="ui header">Предложения</h1>
-    <table id="table" class="ui table">
-        <thead>
-        <tr>
-            <th>id</th>
-            <th>Заказ</th>
-            <th>Описание</th>
-            <th>Пользователь</th>
-            <th>Питомец</th>
-            <th></th>
-        </tr>
-        </thead>
-    </table>
+    <div class="ui segment">
+        <table id="table" class="ui table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Заказ</th>
+                <th>Описание</th>
+                <th>Пользователь</th>
+                <th>Питомец</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 <div id="addModal" class="ui modal">
     <div class="header">Добавить новый заказ</div>

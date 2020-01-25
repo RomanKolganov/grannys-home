@@ -56,10 +56,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(AppUser user) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Optional<AppUser> oldUser = userDao.findById(user.getId());
         oldUser.ifPresent(u -> {
             u.setName(user.getName());
             u.setLogin(user.getLogin());
+            u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userDao.save(u);
         });
     }

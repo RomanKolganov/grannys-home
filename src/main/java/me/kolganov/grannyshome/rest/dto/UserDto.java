@@ -51,6 +51,7 @@ public class UserDto {
         return AppUser.builder()
                 .id(userDto.getId())
                 .name(userDto.getName())
+                .password(userDto.getPassword())
                 .login(userDto.getLogin())
                 .build();
     }

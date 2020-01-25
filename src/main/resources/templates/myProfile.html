@@ -28,7 +28,7 @@
             </div>
             <div class="field">
                 <label>Пароль</label>
-                <input id="inputUserPassword" type="password" name="password" placeholder="Введите пароль" readonly="">
+                <input id="inputUserPassword" type="password" name="password" placeholder="Введите пароль">
             </div>
             <div class="field">
                 <label>Имя</label>
@@ -164,7 +164,6 @@
             success: function(data) {
                 currentUserId = data.id;
                 $("#inputUserLogin").val(data.login);
-                $("#inputUserPassword").val(data.password);
                 $("#inputUserName").val(data.name);
             }
         });
@@ -174,6 +173,7 @@
         var data = {
             "id": currentUserId,
             "login": $("#inputUserLogin").val(),
+            "password": $("#inputUserPassword").val(),
             "name": $("#inputUserName").val()
         }
 
@@ -184,6 +184,7 @@
             data: JSON.stringify(data),
             success: function() {
                 loadUserInfo();
+                $("#inputUserPassword").val("")
             }
         });
     }
