@@ -40,7 +40,7 @@ public class OrderDto {
                 .title(orderDto.getTitle())
                 .description(orderDto.getDescription())
                 .dateCreation(orderDto.getDateCreation())
-                .animal(AnimalDto.toEntity(orderDto.getAnimalDto()))
+                .animal(AnimalDto.toEntityWithUser(orderDto.getAnimalDto()))
                 .user(UserDto.toEntity(orderDto.getUserDto()))
                 .build();
 

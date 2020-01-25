@@ -19,9 +19,11 @@ public class Animal {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "quantity")
-    private Integer quantity;
 
     @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL)
     private Order order;
+
+    @ManyToOne(targetEntity = AppUser.class)
+    @JoinColumn(name = "user_id")
+    private AppUser user;
 }

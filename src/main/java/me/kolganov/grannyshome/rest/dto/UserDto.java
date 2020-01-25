@@ -19,16 +19,22 @@ public class UserDto {
     @JsonProperty("login") private String login;
     @JsonProperty("password") private String password;
     @JsonProperty("comments") private List<CommentDto> commentDtoList;
+    @JsonProperty("animals") private List<AnimalDto> animalDtoList;
 
     public static UserDto toDto(AppUser user) {
         List<CommentDto> commentDtoList = new ArrayList<>();
         user.getCommentsTo().forEach(c -> commentDtoList.add(CommentDto.toDto(c)));
+
+        List<AnimalDto> animalDtoList = new ArrayList<>();
+        user.getAnimals().forEach(a -> animalDtoList.add(AnimalDto.toDto(a)));
+
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .commentDtoList(commentDtoList)
+                .animalDtoList(animalDtoList)
                 .build();
     }
 
@@ -46,7 +52,6 @@ public class UserDto {
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .login(userDto.getLogin())
-                .password(userDto.getPassword())
                 .build();
     }
 }

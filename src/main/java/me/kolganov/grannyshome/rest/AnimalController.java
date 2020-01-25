@@ -25,7 +25,7 @@ public class AnimalController {
 
     @PostMapping("/animal")
     public void createAnimal(@RequestBody AnimalDto animalDto) {
-        animalService.save(AnimalDto.toEntity(animalDto));
+        animalService.save(AnimalDto.toEntityWithUser(animalDto));
     }
 
     @PutMapping("/animal/{id}")

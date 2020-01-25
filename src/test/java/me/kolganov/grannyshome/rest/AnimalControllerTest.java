@@ -30,9 +30,9 @@ class AnimalControllerTest {
 
     @BeforeAll
     static void fillAnimals() {
-        Animal animal1 = Animal.builder().id(1L).name("Test animal name 1").quantity(1).build();
-        Animal animal2 = Animal.builder().id(2L).name("Test animal name 2").quantity(2).build();
-        Animal animal3 = Animal.builder().id(3L).name("Test animal name 3").quantity(3).build();
+        Animal animal1 = Animal.builder().id(1L).name("Test animal name 1").build();
+        Animal animal2 = Animal.builder().id(2L).name("Test animal name 2").build();
+        Animal animal3 = Animal.builder().id(3L).name("Test animal name 3").build();
 
         animals.add(animal1);
         animals.add(animal2);

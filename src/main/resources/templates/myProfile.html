@@ -23,13 +23,18 @@
         <h3 class="ui header">Обо мне</h3>
         <div class="ui form">
             <div class="field">
-                <label>Имя</label>
-                <input id="first_name" type="text" name="first_name" placeholder="Имя">
+                <label>Логин</label>
+                <input id="inputUserLogin" type="text" name="login" placeholder="Введите логин">
             </div>
             <div class="field">
-                <label>Фамилия</label>
-                <input id="last_name" type="text" name="last_name" placeholder="Фамилия">
+                <label>Пароль</label>
+                <input id="inputUserPassword" type="password" name="password" placeholder="Введите пароль" readonly="">
             </div>
+            <div class="field">
+                <label>Имя</label>
+                <input id="inputUserName" type="text" name="name" placeholder="Введите имя">
+            </div>
+            <button id="btnSaveUserInfo" class="ui button" onclick="saveUserInfo()">Сохранить</button>
         </div>
     </div>
     <div class="ui segment">
@@ -78,9 +83,12 @@
 </div>
 <script>
     $(document).ready(function() {
+        var currentUserId;
+        loadUserInfo();
+
         var table = $("#table").DataTable({
             ajax: {
-                url: "animal/",
+                url: "user/animals",
                 type: "GET",
                 dataSrc: ""
             },
@@ -114,10 +122,11 @@
 
         $("#btnAdd").on("click", function () {
             var name = $("#nameAddInput").val();
-
+            var user = {"id": currentUserId};
             if (name !== "") {
                 var data = {
-                    "name": name
+                    "name": name,
+                    "user": user
                 };
                 createEntity("animal/", data, $("#table"));
                 $("#addModal").modal('hide');
@@ -145,6 +154,37 @@
         $("#nameUpdateInput").val(name);
 
         $("#editModal").modal('show');
+    }
+
+    function loadUserInfo() {
+        $.ajax({
+            url: "user/current",
+            type: "GET",
+            success: function(data) {
+                currentUserId = data.id;
+                $("#inputUserLogin").val(data.login);
+                $("#inputUserPassword").val(data.password);
+                $("#inputUserName").val(data.name);
+            }
+        });
+    }
+
+    function saveUserInfo() {
+        var data = {
+            "id": currentUserId,
+            "login": $("#inputUserLogin").val(),
+            "name": $("#inputUserName").val()
+        }
+
+        $.ajax({
+            url: "user",
+            type: "PUT",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function() {
+                loadUserInfo();
+            }
+        });
     }
 </script>
 </body>

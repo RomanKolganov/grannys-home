@@ -31,6 +31,8 @@ public class AppUser {
     private List<Comment> commentsTo;
     @OneToMany(mappedBy = "userFrom")
     private List<Comment> commentsFrom;
+    @OneToMany(mappedBy = "user")
+    private List<Animal> animals;
 
     @ManyToMany
     @JoinTable(

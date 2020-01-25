@@ -2,7 +2,9 @@ package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.dao.AnimalDao;
+import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.domain.Animal;
+import me.kolganov.grannyshome.domain.AppUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
     private final AnimalDao animalDao;
+    private final AppUserDao userDao;
 
     @Override
     public List<Animal> getAll() {
@@ -25,7 +28,11 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void save(Animal animal) {
-        animalDao.save(animal);
+        Optional<AppUser> user = userDao.findById(animal.getUser().getId());
+        user.ifPresent(u -> {
+            animal.setUser(u);
+            animalDao.save(animal);
+        });
     }
 
     @Override
@@ -33,7 +40,6 @@ public class AnimalServiceImpl implements AnimalService {
         Optional<Animal> oldAnimal = animalDao.findById(animal.getId());
         oldAnimal.ifPresent(a -> {
             a.setName(animal.getName());
-            a.setQuantity(animal.getQuantity());
             animalDao.save(a);
         });
     }

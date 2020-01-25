@@ -22,12 +22,10 @@ class AnimalDaoTest {
     void saveAndFindTest() {
         Animal animal = new Animal();
         animal.setName("Нана");
-        animal.setQuantity(1);
         animalDao.save(animal);
 
         Animal actualAnimal = em.find(Animal.class, animal.getId());
         assertThat(actualAnimal).isNotNull()
-                .matches(s -> s.getName().equals(animal.getName()))
-                .matches(s -> s.getQuantity().equals(animal.getQuantity()));
+                .matches(s -> s.getName().equals(animal.getName()));
     }
 }

@@ -1,10 +1,15 @@
 package me.kolganov.grannyshome.service;
 
+import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.rest.dto.AnimalDto;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface UserService {
+    List<Animal> getAllCurrentUserAnimals(Principal principal);
+    AppUser getCurrentUser(Principal principal);
     List<AppUser> getAll();
     AppUser getById(long id);
     void save(AppUser user);

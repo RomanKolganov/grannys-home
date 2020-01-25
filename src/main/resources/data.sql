@@ -3,9 +3,9 @@ insert into users (name, login, password) values ('Принимающий Зак
 insert into users (name, login, password) values ('Нормально Исполняющий', 'cool_dude', '$2y$12$NynmXCG3xwSXp78SxjMX4e.quZ3z3ClGNtYoZqzZWGAmcqZJQ/GkW');--cool_dude_password
 insert into users (name, login, password) values ('Тестовый', 'test', '$2y$12$.gmpkQEFN962fbUPvoQAveFHOpd8/PP4RJbhjTUU/k6XKIIkfLKSO');--test
 
-insert into animals (name, quantity) values ('Нана', 1);
-insert into animals (name, quantity) values ('Дракоша', 1);
-insert into animals (name, quantity) values ('Фландерс', 1);
+insert into animals (name, user_id) values ('Нана', 4);
+insert into animals (name, user_id) values ('Дракоша', 4);
+insert into animals (name, user_id) values ('Фландерс', 1);
 
 insert into orders (title, description, animal_id, user_id)
 values ('Выгул собаки', 'Гулять 2 раза в день. Кормить после каждой прогулки', 1, 1);

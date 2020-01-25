@@ -39,7 +39,6 @@ class OrderDaoTest {
 
         Animal animal = new Animal();
         animal.setName("Плотва");
-        animal.setQuantity(1);
         animalDao.save(animal);
 
         Order order = new Order();
