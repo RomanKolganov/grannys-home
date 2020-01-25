@@ -12,7 +12,7 @@ public interface UserService {
     AppUser getCurrentUser(String login);
     List<AppUser> getAll();
     AppUser getById(long id);
-    void save(AppUser user);
+    boolean save(AppUser user);
     void update(AppUser user);
     void delete(long id);
 }

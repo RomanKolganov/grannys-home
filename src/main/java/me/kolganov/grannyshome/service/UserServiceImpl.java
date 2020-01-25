@@ -5,8 +5,11 @@ import me.kolganov.grannyshome.dao.AnimalDao;
 import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.domain.Role;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +41,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(AppUser user) {
+    public boolean save(AppUser user) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        Optional<AppUser> userFromDB = userDao.findByLogin(user.getLogin());
+
+        if (userFromDB.isPresent())
+            return false;
+
+        user.setRoles(Collections.singletonList(Role.builder().id(1L).role("USER").build()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
+        return true;
     }
 
     @Override

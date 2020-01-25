@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="webjars/Semantic-UI/2.4.1/semantic.css" rel="stylesheet">
+    <link href="webjars/datatables/1.10.20/css/dataTables.semanticui.css" rel="stylesheet">
+    <link href="webjars/datatables-buttons/1.6.1/css/buttons.semanticui.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="webjars/Semantic-UI/2.4.1/semantic.js"></script>
+    <script src="webjars/datatables/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="webjars/datatables/1.10.20/js/dataTables.semanticui.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/dataTables.buttons.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
+    <script src="js/main.js"></script>
+    <title>Вход</title>
+</head>
+<body>
+<div class="ui container">
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui header">Вход</h2>
+            <form class="ui large form" th:action="@{/are_u_worthy}" method="post">
+                <div class="ui segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="worthy_username" placeholder="Введите свой логин">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="worthy_password" placeholder="Введите свой пароль">
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button" type="submit">Войти</button>
+                </div>
+            </form>
+            <div class="ui message">
+                <div class="ui styled accordion">
+                    <div class="title"><i class="dropdown icon"></i>Зарегистрироваться</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input id="login" type="text" placeholder="Введите свой логин">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input id="password" type="password" name="worthy_password" placeholder="Введите свой пароль">
+                                </div>
+                            </div>
+                            <button id="btnReg" class="ui fluid large teal button" onclick="registration();">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function registration() {
+        var data = {
+            "login": $("#login").val(),
+            "password": $("#password").val()
+        };
+        $.ajax({
+            url: "registration",
+            type:"POST",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

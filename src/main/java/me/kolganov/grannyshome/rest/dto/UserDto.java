@@ -54,4 +54,11 @@ public class UserDto {
                 .login(userDto.getLogin())
                 .build();
     }
+
+    public static AppUser toEntityForRegistration(UserDto userDto) {
+        return AppUser.builder()
+                .login(userDto.getLogin())
+                .password(userDto.getPassword())
+                .build();
+    }
 }

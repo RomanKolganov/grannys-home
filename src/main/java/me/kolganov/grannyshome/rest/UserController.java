@@ -35,9 +35,9 @@ public class UserController {
         return UserDto.toDto(userService.getById(id));
     }
 
-    @PostMapping("/user")
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.save(UserDto.toEntity(userDto));
+    @PostMapping("/registration")
+    public boolean createUser(@RequestBody UserDto userDto) {
+        return userService.save(UserDto.toEntityForRegistration(userDto));
     }
 
     @PutMapping("/user")

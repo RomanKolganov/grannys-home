@@ -37,15 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                    .antMatchers("/", "/js/**", "/css/**", "/img/**", "/webjars/**").permitAll()
+                    .antMatchers("/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/are_u_worthy")
-                .usernameParameter("worthy_username")
-                .passwordParameter("worthy_password")
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/are_u_worthy")
+                    .usernameParameter("worthy_username")
+                    .passwordParameter("worthy_password")
+                    .defaultSuccessUrl("/offers").permitAll()
                 .and()
-                .rememberMe().key("myDirtyLittleSecret")
-                .and()
-                .exceptionHandling().accessDeniedPage("/access_denied");
+                    .exceptionHandling().accessDeniedPage("/access_denied");
     }
 }
