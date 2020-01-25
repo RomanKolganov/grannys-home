@@ -43,7 +43,7 @@
             <thead>
             <tr>
                 <th>id</th>
-                <th>name</th>
+                <th>Кличка</th>
                 <th></th>
             </tr>
             </thead>
@@ -107,6 +107,9 @@
                     }
                 }
             ],
+            columnDefs: [
+                {"targets": [0], "visible": false, "searchable": false},
+            ],
             lengthChange: false
         });
         new $.fn.dataTable.Buttons(table, [{
@@ -122,13 +125,11 @@
 
         $("#btnAdd").on("click", function () {
             var name = $("#nameAddInput").val();
-            var user = {"id": currentUserId};
             if (name !== "") {
                 var data = {
-                    "name": name,
-                    "user": user
+                    "name": name
                 };
-                createEntity("animal/", data, $("#table"));
+                createEntity("animal", data, $("#table"));
                 $("#addModal").modal('hide');
                 $("#name").val("");
             }

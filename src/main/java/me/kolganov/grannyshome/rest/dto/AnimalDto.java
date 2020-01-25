@@ -37,7 +37,7 @@ public class AnimalDto {
         return Animal.builder()
                 .id(animalDto.getId())
                 .name(animalDto.getName())
-                .user(AppUser.builder().id(animalDto.getUserDto().getId()).build())
+                .user(AppUser.builder().login(animalDto.getUserDto().getLogin()).build())
                 .build();
     }
 }

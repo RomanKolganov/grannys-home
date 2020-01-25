@@ -2,9 +2,11 @@ package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.rest.dto.AnimalDto;
+import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.AnimalService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,8 @@ public class AnimalController {
     }
 
     @PostMapping("/animal")
-    public void createAnimal(@RequestBody AnimalDto animalDto) {
+    public void createAnimal(@RequestBody AnimalDto animalDto, Principal principal) {
+        animalDto.setUserDto(UserDto.builder().login(principal.getName()).build());
         animalService.save(AnimalDto.toEntityWithUser(animalDto));
     }
 

@@ -28,7 +28,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void save(Animal animal) {
-        Optional<AppUser> user = userDao.findById(animal.getUser().getId());
+        Optional<AppUser> user = userDao.findByLogin(animal.getUser().getLogin());
         user.ifPresent(u -> {
             animal.setUser(u);
             animalDao.save(animal);
