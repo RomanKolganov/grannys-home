@@ -31,7 +31,7 @@ public class AppUser {
     @ToString.Exclude
     @OneToMany(mappedBy = "userFrom")
     private List<Comment> commentsFrom;
-    @ToString.Exclude
+//    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
     @ToString.Exclude

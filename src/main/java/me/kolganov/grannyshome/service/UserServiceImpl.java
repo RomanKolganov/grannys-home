@@ -1,13 +1,12 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.dao.AnimalDao;
 import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
-import me.kolganov.grannyshome.rest.dto.AnimalDto;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +14,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final AppUserDao userDao;
+    private final AnimalDao animalDao;
 
     @Override
     public List<Animal> getAllCurrentUserAnimals(String login) {
-        Optional<AppUser> user = userDao.findByLogin(login);
-        return user.map(AppUser::getAnimals).orElse(null);
+        return animalDao.findByUserLogin(login);
     }
 
     @Override

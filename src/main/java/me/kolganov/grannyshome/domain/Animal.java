@@ -18,7 +18,7 @@ public class Animal {
     private String name;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "animal")
     private Order order;
 
     @ToString.Exclude

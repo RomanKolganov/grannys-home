@@ -48,11 +48,13 @@ public class OrderServiceImpl implements OrderService {
         Optional<AppUser> user = userDao.findByLogin(order.getUser().getLogin());
         Optional<Animal> animal = animalDao.findById(order.getAnimal().getId());
 
-        if (user.isPresent() && animal.isPresent()) {
-            order.setUser(user.get());
-            order.setAnimal(animal.get());
-            orderDao.save(order);
-        }
+        user.ifPresent(u -> {
+            order.setUser(u);
+            animal.ifPresent(a -> {
+                order.setAnimal(a);
+                orderDao.save(order);
+            });
+        });
     }
 
     @Override
