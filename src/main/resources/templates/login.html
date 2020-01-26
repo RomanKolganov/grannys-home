@@ -14,12 +14,18 @@
     <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
     <script src="js/main.js"></script>
     <title>Вход</title>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+    </style>
 </head>
 <body>
 <div class="ui container">
     <div class="ui middle aligned center aligned grid">
         <div class="column">
-            <h2 class="ui header">Вход</h2>
+            <h2 class="ui header">Granny's Home</h2>
             <form class="ui large form" th:action="@{/are_u_worthy}" method="post">
                 <div class="ui segment">
                     <div class="field">

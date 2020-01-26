@@ -2,6 +2,7 @@ $(document).ready(function() {
     $(".ui.fluid.selection.dropdown").dropdown({
         clearable: true
     });
+    $(".ui.dropdown.item").dropdown();
     $(".ui.styled.accordion").accordion();
 });
 

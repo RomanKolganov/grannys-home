@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="header">
+    <div class="ui top attached inverted menu">
+        <div class="item">
+            Granny's Home
+        </div>
+        <div class="ui dropdown item">
+            Предложения
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" href="/offers">Все</a>
+                <a class="item" href="/createdOffers">Созданные</a>
+                <a class="item" href="/acceptedOffers">Принятые</a>
+            </div>
+        </div>
+        <div class="right menu">
+            <a class="item" href="/my_profile">Мой профиль</a>
+            <a class="item" href="/logout">
+                <i class="logout middle aligned icon"></i>
+                Выход
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
