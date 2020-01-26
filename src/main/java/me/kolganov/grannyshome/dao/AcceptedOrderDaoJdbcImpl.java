@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ public class AcceptedOrderDaoJdbcImpl implements AcceptedOrderDaoJdbc {
     public List<AcceptedOrder> findByAcceptedUserLogin(String login) {
         String sql = "select * from user_accepted_orders_view where accepted_user_login = ?";
         return jdbcTemplate.query(sql, new Object[]{login}, new AcceptedOrderMapper());
+    }
+
+    public void deleteById(long id) {
+        jdbcTemplate.update("delete from user_accepted_orders where id = ?", id);
     }
 
     private static class AcceptedOrderMapper implements RowMapper<AcceptedOrder> {
