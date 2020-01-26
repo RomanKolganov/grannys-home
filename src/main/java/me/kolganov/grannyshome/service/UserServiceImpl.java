@@ -7,6 +7,7 @@ import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Role;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -37,26 +38,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(AppUser user) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Optional<AppUser> userFromDB = userDao.findByLogin(user.getLogin());
 
         if (userFromDB.isPresent())
             return false;
 
-        user.setRoles(Collections.singletonList(Role.builder().id(1L).role("USER").build()));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.save(user);
+        user.setRoles(Collections.singletonList(Role.builder().id(1L).build()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        AppUser savedUser = userDao.save(user);
+        System.out.println(savedUser);
         return true;
     }
 
     @Override
     public void update(AppUser user) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Optional<AppUser> oldUser = userDao.findById(user.getId());
         oldUser.ifPresent(u -> {
             u.setName(user.getName());
             u.setLogin(user.getLogin());
-            u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            if (user.getPassword() != null && !"".equals(user.getPassword()))
+                u.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(u);
         });
     }

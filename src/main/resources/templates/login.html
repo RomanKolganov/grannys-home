@@ -19,13 +19,16 @@
             padding-top: 40px;
             padding-bottom: 40px;
         }
+        .column {
+            max-width: 500px;
+        }
     </style>
 </head>
 <body>
 <div class="ui container">
     <div class="ui middle aligned center aligned grid">
         <div class="column">
-            <h2 class="ui header">Granny's Home</h2>
+            <h2 class="ui header">Granny's Home (Beta)</h2>
             <form class="ui large form" th:action="@{/are_u_worthy}" method="post">
                 <div class="ui segment">
                     <div class="field">
@@ -57,7 +60,7 @@
                             <div class="field">
                                 <div class="ui left icon input">
                                     <i class="lock icon"></i>
-                                    <input id="password" type="password" name="worthy_password" placeholder="Введите свой пароль">
+                                    <input id="password" type="password" placeholder="Введите свой пароль">
                                 </div>
                             </div>
                             <button id="btnReg" class="ui fluid large teal button" onclick="registration();">Зарегистрироваться</button>
