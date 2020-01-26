@@ -1,18 +1,17 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.dao.AcceptedOrderDao;
 import me.kolganov.grannyshome.dao.AnimalDao;
 import me.kolganov.grannyshome.dao.AppUserDao;
 import me.kolganov.grannyshome.dao.OrderDao;
+import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,17 +21,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
     private final AppUserDao userDao;
     private final AnimalDao animalDao;
+    private final AcceptedOrderDao acceptedOrderDao;
 
     @Override
-    public List<Order> getAll(int pageNumber, int size, String field) {
-        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(field));
-        Page<Order> orders = orderDao.findAll(pageable);
-        return orders.getContent();
-    }
+    public List<Order> getAll(String login) {
+        List<AcceptedOrder> acceptedOrders = acceptedOrderDao.findByAcceptedUserLogin(login);
+        if (acceptedOrders.size() == 0)
+            return orderDao.findAll();
 
-    @Override
-    public List<Order> getAll() {
-        return orderDao.findAll();
+        List<Long> idList = new ArrayList<>();
+        acceptedOrders.forEach(a -> idList.add(a.getOrder().getId()));
+        return orderDao.findAllByIdNotIn(idList);
     }
 
     @Override

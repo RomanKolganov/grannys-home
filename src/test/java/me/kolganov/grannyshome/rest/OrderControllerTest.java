@@ -53,42 +53,6 @@ class OrderControllerTest {
     }
 
     @Test
-    @DisplayName("должен проверять наличие метода GET (all)")
-    void getOrderListTest() throws Exception {
-        given(orderService.getAll()).willReturn(orders);
-
-        this.mockMvc.perform(get("/order"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1, 'title': 'Test title 1', 'description': 'Test description 1', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 1, 'name': 'Test animal name 1', 'quantity': 1}, " +
-                        "'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}, " +
-                        "{'id': 2, 'title': 'Test title 2', 'description': 'Test description 2', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 2, 'name': 'Test animal name 2', 'quantity': 2}, " +
-                        "'user': {'id': 2, 'name': 'Name 2', 'login': 'login 2', 'password': 'password 2'}}, " +
-                        "{'id': 3, 'title': 'Test title 3', 'description': 'Test description 3', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 3, 'name': 'Test animal name 3', 'quantity': 3}, " +
-                        "'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}]"));
-    }
-
-    @Test
-    @DisplayName("должен проверять наличие метода GET (all)")
-    void getOrderListPaginationTest() throws Exception {
-        given(orderService.getAll(0, 10, "id")).willReturn(orders);
-
-        this.mockMvc.perform(get("/order/0/10/id"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1, 'title': 'Test title 1', 'description': 'Test description 1', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 1, 'name': 'Test animal name 1', 'quantity': 1}, " +
-                        "'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}, " +
-                        "{'id': 2, 'title': 'Test title 2', 'description': 'Test description 2', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 2, 'name': 'Test animal name 2', 'quantity': 2}, " +
-                        "'user': {'id': 2, 'name': 'Name 2', 'login': 'login 2', 'password': 'password 2'}}, " +
-                        "{'id': 3, 'title': 'Test title 3', 'description': 'Test description 3', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 3, 'name': 'Test animal name 3', 'quantity': 3}, " +
-                        "'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}]"));
-    }
-
-    @Test
     @DisplayName("должен проверять наличие метода GET (one)")
     void getOneOrderTest() throws Exception {
         given(orderService.getById(1)).willReturn(orders.get(0));
