@@ -24,11 +24,6 @@ public class PageController {
         return "acceptedOffers";
     }
 
-    @GetMapping("/createdOffers")
-    public String getCreatedOffersPage() {
-        return "createdOffers";
-    }
-
     @GetMapping("/my_profile")
     public String getMyProfilePage() {
         return "myProfile";
@@ -37,6 +32,7 @@ public class PageController {
     @GetMapping("/offers")
     public String getOffersPage(Model model, Principal principal) {
         model.addAttribute("animals", userService.getAllCurrentUserAnimals(principal.getName()));
+        model.addAttribute("user", principal.getName());
         return "offers";
     }
 

@@ -82,7 +82,13 @@
                 {
                     "data": null,
                     render: function(data) {
-                        return '<button class="ui button" onClick=acceptOrder('+data.id+');>Взять</button>';
+                        console.log(data);
+                        console.log("[[${user}]]");
+                        if (data.user.login === "[[${user}]]") {
+                            return '<button class="ui button" onClick=deleteOrder('+data.id+');>Удалить</button>';
+                        } else {
+                            return '<button class="ui button" onClick=acceptOrder('+data.id+');>Взять</button>';
+                        }
                     }
                 }
             ],
@@ -126,6 +132,11 @@
         var order = {"id": orderId};
         var data = {"order": order};
         createEntity("acceptedOrder", data, $("#table"));
+    }
+
+    function deleteOrder(orderId) {
+        var url = "order/"+orderId;
+        deleteEntity(url, $("#table"));
     }
 </script>
 </body>

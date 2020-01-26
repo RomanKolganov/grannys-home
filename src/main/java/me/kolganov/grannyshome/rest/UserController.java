@@ -17,7 +17,8 @@ public class UserController {
 
     @GetMapping(value = "/user/animals", produces = "application/json")
     public List<AnimalDto> getAllUserAnimals(Principal principal) {
-        return userService.getAllCurrentUserAnimals(principal.getName()).stream().map(AnimalDto::toDto).collect(Collectors.toList());
+        return userService.getAllCurrentUserAnimals(principal.getName()).stream()
+                .map(AnimalDto::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/user/current", produces = "application/json")
