@@ -53,17 +53,6 @@ class OrderControllerTest {
     }
 
     @Test
-    @DisplayName("должен проверять наличие метода GET (one)")
-    void getOneOrderTest() throws Exception {
-        given(orderService.getById(1)).willReturn(orders.get(0));
-        this.mockMvc.perform(get("/order/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{'id': 1, 'title': 'Test title 1', 'description': 'Test description 1', 'date_creation': " + date + ", " +
-                        "'animal': {'id': 1, 'name': 'Test animal name 1', 'quantity': 1}, " +
-                        "'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}"));
-    }
-
-    @Test
     @DisplayName("должен проверять наличие метода POST")
     void postOrderTest() throws Exception {
         this.mockMvc.perform(post("/order")

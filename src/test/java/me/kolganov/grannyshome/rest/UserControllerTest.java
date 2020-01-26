@@ -40,18 +40,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("должен проверять наличие метода GET (all)")
-    void getAllUsersTest() throws Exception {
-        given(userService.getAll()).willReturn(users);
-
-        this.mockMvc.perform(get("/user"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}, " +
-                        "{'id': 2, 'name': 'Name 2', 'login': 'login 2', 'password': 'password 2'}, " +
-                        "{'id': 3, 'name': 'Name 3', 'login': 'login 3', 'password': 'password 3'}]"));
-    }
-
-    @Test
     @DisplayName("должен проверять наличие метода GET (one)")
     void getOneUserTest() throws Exception {
         given(userService.getById(2)).willReturn(users.get(1));

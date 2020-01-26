@@ -44,27 +44,6 @@ class CommentControllerTest {
     }
 
     @Test
-    @DisplayName("должен проверять наличие метода GET (all)")
-    void getCommentsListTest() throws Exception {
-        given(commentService.getAll()).willReturn(comments);
-
-        this.mockMvc.perform(get("/comment"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1, 'title': 'Test title 1', 'text': 'Test text 1', 'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}, " +
-                        "{'id': 2, 'title': 'Test title 2', 'text': 'Test text 2', 'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}, " +
-                        "{'id': 3, 'title': 'Test title 3', 'text': 'Test text 3', 'user': {'id': 2, 'name': 'Name 2', 'login': 'login 2', 'password': 'password 2'}}]"));
-    }
-
-    @Test
-    @DisplayName("должен проверять наличие метода GET (one)")
-    void getOneCommentTest() throws Exception {
-        given(commentService.getById(1)).willReturn(comments.get(0));
-        this.mockMvc.perform(get("/comment/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{'id': 1, 'title': 'Test title 1', 'text': 'Test text 1', 'user': {'id': 1, 'name': 'Name 1', 'login': 'login 1', 'password': 'password 1'}}"));
-    }
-
-    @Test
     @DisplayName("должен проверять наличие метода POST")
     void postCommentTest() throws Exception {
         this.mockMvc.perform(post("/comment")

@@ -26,11 +26,6 @@ public class UserController {
         return UserDto.toNoCommentsDto(userService.getCurrentUser(principal.getName()));
     }
 
-    @GetMapping(value = "/user", produces = "application/json")
-    public List<UserDto> getAllUsers() {
-        return userService.getAll().stream().map(UserDto::toDto).collect(Collectors.toList());
-    }
-
     @GetMapping(value = "/user/{id}", produces = "application/json")
     public UserDto getUserById(@PathVariable("id") long id) {
         return UserDto.toDto(userService.getById(id));
@@ -44,10 +39,5 @@ public class UserController {
     @PutMapping("/user")
     public void updateUser(@RequestBody UserDto userDto) {
         userService.update(UserDto.toEntity(userDto));
-    }
-
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable("id") long id) {
-        userService.delete(id);
     }
 }

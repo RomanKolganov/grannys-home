@@ -50,15 +50,6 @@ class AnimalControllerTest {
     }
 
     @Test
-    @DisplayName("должен проверять наличие метода GET (one)")
-    void getOneAnimalTest() throws Exception {
-        given(animalService.getById(1)).willReturn(animals.get(0));
-        this.mockMvc.perform(get("/animal/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{'id': 1, 'name': 'Test animal name 1', 'quantity': 1}"));
-    }
-
-    @Test
     @DisplayName("должен проверять наличие метода POST")
     void postAnimalTest() throws Exception {
         this.mockMvc.perform(post("/animal")

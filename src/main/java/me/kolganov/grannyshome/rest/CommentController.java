@@ -17,27 +17,11 @@ import java.util.stream.Collectors;
 public class CommentController {
     private final CommentService commentService;
 
-    @GetMapping("/comment")
-    public List<CommentDto> getAllComments() {
-        return commentService.getAll().stream().map(CommentDto::toDto).collect(Collectors.toList());
-    }
-
-    @GetMapping("/comment/{id}")
-    public CommentDto getCommentById(@PathVariable("id") long id) {
-        return CommentDto.toDto(commentService.getById(id));
-    }
-
     @PostMapping("/comment")
     public void createComment(@RequestBody CommentDto commentDto, Principal principal) {
         Comment comment = CommentDto.toEntity(commentDto);
         comment.setUserFrom(AppUser.builder().login(principal.getName()).build());
         commentService.save(comment);
-    }
-
-    @PutMapping("/comment/{id}")
-    public void updateComment(@PathVariable("id") long id,
-                              @RequestBody CommentDto commentDto) {
-        commentService.update(CommentDto.toEntity(commentDto));
     }
 
     @DeleteMapping("/comment/{id}")

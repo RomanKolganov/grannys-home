@@ -20,21 +20,10 @@ public class OrderController {
         return orderService.getAll(principal.getName()).stream().map(OrderDto::toDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/order/{id}")
-    public OrderDto getOrderById(@PathVariable("id") long id) {
-        return OrderDto.toDto(orderService.getById(id));
-    }
-
     @PostMapping("/order")
     public void createOrder(@RequestBody OrderDto orderDto, Principal principal) {
         orderDto.setUserDto(UserDto.builder().login(principal.getName()).build());
         orderService.save(OrderDto.toEntity(orderDto));
-    }
-
-    @PutMapping("/order/{id}")
-    public void updateOrder(@PathVariable("id") long id,
-                            @RequestBody OrderDto orderDto) {
-        orderService.update(OrderDto.toEntity(orderDto));
     }
 
     @DeleteMapping("/order/{id}")

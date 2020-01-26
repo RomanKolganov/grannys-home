@@ -20,20 +20,14 @@ public class AnimalController {
         return animalService.getAll().stream().map(AnimalDto::toDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/animal/{id}")
-    public AnimalDto getAnimalById(@PathVariable("id") long id) {
-        return AnimalDto.toDto(animalService.getById(id));
-    }
-
     @PostMapping("/animal")
     public void createAnimal(@RequestBody AnimalDto animalDto, Principal principal) {
         animalDto.setUserDto(UserDto.builder().login(principal.getName()).build());
         animalService.save(AnimalDto.toEntityWithUser(animalDto));
     }
 
-    @PutMapping("/animal/{id}")
-    public void updateAnimal(@PathVariable("id") long id,
-                             @RequestBody AnimalDto animalDto) {
+    @PutMapping("/animal")
+    public void updateAnimal(@RequestBody AnimalDto animalDto) {
         animalService.update(AnimalDto.toEntity(animalDto));
     }
 

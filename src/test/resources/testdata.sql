@@ -8,14 +8,14 @@ insert into animals (name, user_id) values ('Дракоша', 4);
 insert into animals (name, user_id) values ('Фландерс', 1);
 
 insert into orders (title, description, animal_id, user_id)
-values ('Выгул собаки', 'Гулять 2 раза в день. Кормить после каждой прогулки', 1, 1);
+values ('Выгул собаки', 'Гулять 2 раза в день. Кормить после каждой прогулки', 1, 4);
 insert into orders (title, description, animal_id, user_id)
 values ('Отдам рыбок', 'Ничего не надо, просто сыпь корм иногда.', 3, 3);
 insert into orders (title, description, animal_id, user_id)
-values ('Дракон', 'Обязательно заставлять летать хотя бы раз в день. Еду он найдет сам. Ни в коем случае не пытаться украсть его сокровища!!!', 2, 2);
+values ('Дракон', 'Обязательно заставлять летать хотя бы раз в день. Еду он найдет сам. Ни в коем случае не пытаться украсть его сокровища!!!', 2, 4);
 
-insert into user_accepted_orders (user_id, order_id) values (2, 1);
-insert into user_accepted_orders (user_id, order_id) values (3, 1);
+insert into user_accepted_orders (accepted_user_id, order_id) values (2, 1);
+insert into user_accepted_orders (accepted_user_id, order_id) values (3, 1);
 
 insert into comments (text, user_id_to, user_id_from) values ('Сам жрет собачий корм и не дает его собаке', 2, 1);
 insert into comments (text, user_id_to, user_id_from) values ('Исполняет на высшем уровне', 3, 2);

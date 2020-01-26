@@ -35,11 +35,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getById(long id) {
-        return orderDao.findById(id).orElseGet(Order::new);
-    }
-
-    @Override
     public void save(Order order) {
         Optional<AppUser> user = userDao.findByLogin(order.getUser().getLogin());
         Optional<Animal> animal = animalDao.findById(order.getAnimal().getId());
@@ -50,16 +45,6 @@ public class OrderServiceImpl implements OrderService {
                 order.setAnimal(a);
                 orderDao.save(order);
             });
-        });
-    }
-
-    @Override
-    public void update(Order order) {
-        Optional<Order> oldOrder = orderDao.findById(order.getId());
-        oldOrder.ifPresent(o -> {
-            o.setTitle(order.getTitle());
-            o.setDescription(order.getDescription());
-            orderDao.save(o);
         });
     }
 

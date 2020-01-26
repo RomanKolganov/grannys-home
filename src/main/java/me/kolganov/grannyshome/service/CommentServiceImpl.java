@@ -9,7 +9,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,16 +16,6 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
     private final CommentDao commentDao;
     private final AppUserDao userDao;
-
-    @Override
-    public List<Comment> getAll() {
-        return commentDao.findAll();
-    }
-
-    @Override
-    public Comment getById(long id) {
-        return commentDao.findById(id).orElseGet(Comment::new);
-    }
 
     @Override
     public void save(Comment comment) {
@@ -39,15 +28,6 @@ public class CommentServiceImpl implements CommentService {
                 comment.setUserFrom(uf);
                 commentDao.save(comment);
             });
-        });
-    }
-
-    @Override
-    public void update(Comment comment) {
-        Optional<Comment> oldComment = commentDao.findById(comment.getId());
-        oldComment.ifPresent(c -> {
-            c.setText(comment.getText());
-            commentDao.save(c);
         });
     }
 

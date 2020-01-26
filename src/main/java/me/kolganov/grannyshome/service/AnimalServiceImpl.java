@@ -22,11 +22,6 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     @Override
-    public Animal getById(long id) {
-        return animalDao.findById(id).orElseGet(Animal::new);
-    }
-
-    @Override
     public void save(Animal animal) {
         Optional<AppUser> user = userDao.findByLogin(animal.getUser().getLogin());
         user.ifPresent(u -> {

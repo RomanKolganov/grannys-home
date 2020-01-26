@@ -6,9 +6,6 @@ import java.security.Principal;
 import java.util.List;
 
 public interface CommentService {
-    List<Comment> getAll();
-    Comment getById(long id);
     void save(Comment comment);
-    void update(Comment comment);
     void delete(long id, Principal principal);
 }

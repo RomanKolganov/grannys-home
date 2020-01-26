@@ -31,11 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<AppUser> getAll() {
-        return userDao.findAll();
-    }
-
-    @Override
     public AppUser getById(long id) {
         return userDao.findById(id).orElseGet(AppUser::new);
     }
@@ -64,10 +59,5 @@ public class UserServiceImpl implements UserService {
             u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userDao.save(u);
         });
-    }
-
-    @Override
-    public void delete(long id) {
-        userDao.deleteById(id);
     }
 }
