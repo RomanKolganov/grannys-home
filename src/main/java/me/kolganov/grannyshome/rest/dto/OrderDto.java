@@ -28,7 +28,7 @@ public class OrderDto {
                 .title(order.getTitle())
                 .description(order.getDescription())
                 .animalDto(AnimalDto.toDto(order.getAnimal()))
-                .userDto(UserDto.toDto(order.getUser()))
+                .userDto(UserDto.toNoCommentsDto(order.getUser()))
                 .build();
     }
 

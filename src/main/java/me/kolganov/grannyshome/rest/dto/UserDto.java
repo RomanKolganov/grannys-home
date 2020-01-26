@@ -32,7 +32,6 @@ public class UserDto {
                 .id(user.getId())
                 .name(user.getName())
                 .login(user.getLogin())
-                .password(user.getPassword())
                 .commentDtoList(commentDtoList)
                 .animalDtoList(animalDtoList)
                 .build();
@@ -43,7 +42,6 @@ public class UserDto {
                 .id(user.getId())
                 .name(user.getName())
                 .login(user.getLogin())
-                .password(user.getPassword())
                 .build();
     }
 

@@ -35,7 +35,7 @@ public class AppUser {
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
     @ToString.Exclude
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "acceptedUser")
     private List<AcceptedOrder> acceptedOrders;
 
     @ManyToMany(fetch = FetchType.EAGER)

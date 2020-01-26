@@ -72,7 +72,12 @@
                 {"data": "id"},
                 {"data": "title"},
                 {"data": "description"},
-                {"data": "user.name"},
+                {
+                    "data": null,
+                    render: function(data) {
+                        return '<a href="/profile?id='+data.user.id+'">'+data.user.name+'</a>';
+                    }
+                },
                 {"data": "animal.name"},
                 {
                     "data": null,
@@ -120,7 +125,7 @@
     function acceptOrder(orderId) {
         var order = {"id": orderId};
         var data = {"order": order};
-        createEntity("order/accept", data, $("#table"));
+        createEntity("acceptedOrder", data, $("#table"));
     }
 </script>
 </body>

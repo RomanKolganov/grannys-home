@@ -19,8 +19,8 @@ public class AcceptedOrder {
     private long id;
 
     @ManyToOne(targetEntity = AppUser.class)
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    @JoinColumn(name = "accepted_user_id")
+    private AppUser acceptedUser;
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "order_id")
     private Order order;

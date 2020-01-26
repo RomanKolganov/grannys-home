@@ -41,12 +41,6 @@ public class OrderController {
         orderService.save(OrderDto.toEntity(orderDto));
     }
 
-    @PostMapping("/order/accept")
-    public void acceptOrder(@RequestBody AcceptedOrderDto acceptedOrderDto, Principal principal) {
-        acceptedOrderDto.setUserDto(UserDto.builder().login(principal.getName()).build());
-        orderService.save(AcceptedOrderDto.toEntity(acceptedOrderDto));
-    }
-
     @PutMapping("/order/{id}")
     public void updateOrder(@PathVariable("id") long id,
                             @RequestBody OrderDto orderDto) {
