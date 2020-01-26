@@ -1,9 +1,6 @@
 package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.domain.AppUser;
-import me.kolganov.grannyshome.domain.Order;
-import me.kolganov.grannyshome.rest.dto.AcceptedOrderDto;
 import me.kolganov.grannyshome.rest.dto.OrderDto;
 import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.OrderService;
