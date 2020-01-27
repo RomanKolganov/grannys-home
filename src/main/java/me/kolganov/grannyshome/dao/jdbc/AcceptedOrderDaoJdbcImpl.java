@@ -1,4 +1,4 @@
-package me.kolganov.grannyshome.dao;
+package me.kolganov.grannyshome.dao.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.domain.AcceptedOrder;
@@ -11,9 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor

@@ -13,7 +13,7 @@ import me.kolganov.grannyshome.domain.AppUser;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AnimalDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("name") private String name;

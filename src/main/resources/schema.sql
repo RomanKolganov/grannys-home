@@ -1,6 +1,8 @@
 drop view if exists user_accepted_orders_view;
+drop view if exists messages_view;
 drop table if exists comments;
 drop table if exists user_accepted_orders;
+drop table if exists messages;
 drop table if exists orders;
 drop table if exists animals;
 drop table if exists user_roles;
@@ -9,14 +11,14 @@ drop table if exists roles;
 
 CREATE TABLE users (
     id bigserial,
-    "name" varchar(250),
+    name varchar(250),
     login varchar(100),
     password varchar(150),
     primary key (id)
 );
 CREATE TABLE IF NOT EXISTS animals (
     id bigserial,
-    "name" varchar(250),
+    name varchar(250),
     user_id bigint references users (id),
     primary key (id)
 );
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS user_accepted_orders (
 );
 CREATE TABLE IF NOT EXISTS comments (
     id bigserial,
-    "text" varchar(500),
+    text varchar(500),
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
     primary key (id)
@@ -49,6 +51,13 @@ CREATE TABLE IF NOT EXISTS user_roles (
     user_id bigint,
     role_id bigint
 );
+CREATE TABLE IF NOT EXISTS messages (
+    id bigserial,
+    text varchar(500),
+    user_id_to bigint references users (id),
+    user_id_from bigint references users (id),
+    primary key (id)
+);
 CREATE OR REPLACE view user_accepted_orders_view as
 select uao.id, ua.id as accepted_user_id, ua.login as accepted_user_login, ua.name as accepted_user_name,
 o.id as order_id, o.title, o.description,
@@ -59,3 +68,11 @@ left join users ua on ua.id = uao.accepted_user_id
 left join orders o on o.id = uao.order_id
 left join users uc on uc.id = o.user_id
 left join animals a on a.id = o.animal_id;
+
+create or replace view messages_view as
+select m.id, m.text,
+ut.id as user_id_to, ut.name as user_name_to, ut.login as user_login_to,
+uf.id as user_id_from, uf.name as user_name_from, uf.login as user_login_from
+from messages m
+left join users ut on ut.id = m.user_id_to
+left join users uf on uf.id = m.user_id_from;

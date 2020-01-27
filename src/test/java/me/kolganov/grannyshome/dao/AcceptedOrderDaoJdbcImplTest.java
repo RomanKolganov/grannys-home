@@ -1,5 +1,6 @@
 package me.kolganov.grannyshome.dao;
 
+import me.kolganov.grannyshome.dao.jdbc.AcceptedOrderDaoJdbcImpl;
 import me.kolganov.grannyshome.domain.AcceptedOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

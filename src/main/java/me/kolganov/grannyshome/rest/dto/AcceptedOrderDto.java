@@ -14,7 +14,7 @@ import me.kolganov.grannyshome.domain.Order;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AcceptedOrderDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("user") private UserDto userDto;

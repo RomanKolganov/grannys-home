@@ -1,4 +1,4 @@
-package me.kolganov.grannyshome.dao;
+package me.kolganov.grannyshome.dao.jdbc;
 
 import me.kolganov.grannyshome.domain.AcceptedOrder;
 

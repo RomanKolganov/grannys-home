@@ -14,7 +14,7 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("title") private String title;

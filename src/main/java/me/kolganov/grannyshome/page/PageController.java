@@ -1,6 +1,7 @@
 package me.kolganov.grannyshome.page;
 
 import lombok.RequiredArgsConstructor;
+import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,5 +41,13 @@ public class PageController {
     public String getProfilePage(@RequestParam("id") long id, Model model) {
         model.addAttribute("id", id);
         return "profile";
+    }
+
+    @GetMapping("/chat")
+    public String getChatRoomPage(@RequestParam("id") long id, Model model, Principal principal) {
+        AppUser user = userService.getCurrentUser(principal.getName());
+        model.addAttribute("userIdTo", id);
+        model.addAttribute("userIdFrom", user.getId());
+        return "chatRoom";
     }
 }

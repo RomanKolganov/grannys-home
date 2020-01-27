@@ -5,12 +5,9 @@ import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Comment;
 import me.kolganov.grannyshome.rest.dto.CommentDto;
 import me.kolganov.grannyshome.service.CommentService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +23,6 @@ public class CommentController {
 
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable("id") long id, Principal principal) {
-        commentService.delete(id, principal);
+        commentService.delete(id, principal.getName());
     }
 }

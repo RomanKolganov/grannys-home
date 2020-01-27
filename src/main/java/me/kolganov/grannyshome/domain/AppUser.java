@@ -37,6 +37,12 @@ public class AppUser {
     @ToString.Exclude
     @OneToMany(mappedBy = "acceptedUser")
     private List<AcceptedOrder> acceptedOrders;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "userTo")
+    private List<Message> messagesTo;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "userFrom")
+    private List<Comment> messagesFrom;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

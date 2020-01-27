@@ -32,13 +32,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(long id, Principal principal) {
+    public void delete(long id, String login) {
         Optional<Comment> comment = commentDao.findById(id);
         if (comment.isPresent()) {
-            if (principal.getName().equals(comment.get().getUserFrom().getLogin()))
+            if (login.equals(comment.get().getUserFrom().getLogin()))
                 commentDao.deleteById(comment.get().getId());
             else
-                throw new AccessDeniedException("The user " + principal.getName() + "have no permissions to delete comment from user " + comment.get().getUserFrom().getLogin());
+                throw new AccessDeniedException("The user " + login + "have no permissions to delete comment from user " + comment.get().getUserFrom().getLogin());
         }
     }
 }
