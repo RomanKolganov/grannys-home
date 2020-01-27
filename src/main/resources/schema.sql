@@ -2,6 +2,7 @@ drop view if exists user_accepted_orders_view;
 drop view if exists messages_view;
 drop table if exists comments;
 drop table if exists user_accepted_orders;
+drop table if exists dialogs;
 drop table if exists messages;
 drop table if exists orders;
 drop table if exists animals;
@@ -53,7 +54,14 @@ CREATE TABLE IF NOT EXISTS user_roles (
 );
 CREATE TABLE IF NOT EXISTS messages (
     id bigserial,
+    dialog_id bigint,
     text varchar(500),
+    user_id_to bigint references users (id),
+    user_id_from bigint references users (id),
+    primary key (id)
+);
+CREATE TABLE IF NOT EXISTS dialogs (
+    id bigserial,
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
     primary key (id)
@@ -70,9 +78,10 @@ left join users uc on uc.id = o.user_id
 left join animals a on a.id = o.animal_id;
 
 create or replace view messages_view as
-select m.id, m.text,
+select m.id, m.text, d.id as dialog_id,
 ut.id as user_id_to, ut.name as user_name_to, ut.login as user_login_to,
 uf.id as user_id_from, uf.name as user_name_from, uf.login as user_login_from
 from messages m
+left join dialogs d on d.id = m.dialog_id
 left join users ut on ut.id = m.user_id_to
 left join users uf on uf.id = m.user_id_from;

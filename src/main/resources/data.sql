@@ -31,8 +31,11 @@ insert into user_roles (user_id, role_id) values (3, 1);
 insert into user_roles (user_id, role_id) values (4, 1);
 insert into user_roles (user_id, role_id) values (5, 1);
 
-insert into messages (text, user_id_to, user_id_from) values ('Привет, Чувак', 1, 4);
-insert into messages (text, user_id_to, user_id_from) values ('Привет, Тестовый', 4, 1);
-insert into messages (text, user_id_to, user_id_from) values ('Как дела?', 1, 4);
-insert into messages (text, user_id_to, user_id_from) values ('Нормалек, а у тебя?', 4, 1);
-insert into messages (text, user_id_to, user_id_from) values ('Принимай заказ уже!!!', 2, 4);
+insert into dialogs (user_id_to, user_id_from) values (1, 4);
+insert into dialogs (user_id_to, user_id_from) values (2, 4);
+
+insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Привет, Чувак', 1, 4);
+insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Привет, Тестовый', 4, 1);
+insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Как дела?', 1, 4);
+insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Нормалек, а у тебя?', 4, 1);
+insert into messages (dialog_id, text, user_id_to, user_id_from) values (2, 'Принимай заказ уже!!!', 2, 4);

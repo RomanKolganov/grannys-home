@@ -27,7 +27,7 @@
             <div id="messages"></div>
             <div class="ui reply form">
                 <div class="field">
-                    <textarea id="commentTextarea"></textarea>
+                    <textarea id="messageTextarea"></textarea>
                 </div>
                 <div class="ui primary submit labeled icon button" onclick="sendMessage()"><i class="icon edit"></i>Отправить</div>
             </div>
@@ -40,7 +40,7 @@
     });
 
     function loadMessages() {
-        var url = "message?userIdTo=[[${userIdTo}]]&userIdFrom=[[${userIdFrom}]]";
+        var url = "message/[[${dialogId}]]?userIdTo=[[${userIdTo}]]&userIdFrom=[[${userIdFrom}]]";
         $.ajax({
             url: url,
             type: "GET",
@@ -55,6 +55,29 @@
                                     '</div>';
                     $('#messages').append(message);
                 }
+            }
+        });
+    }
+
+    function clearMessages() {
+        $('#messages').html('');
+    }
+
+    function sendMessage() {
+        var text = $("#messageTextarea").val();
+        var userTo = {"id": [[${userIdTo}]]};
+        var userFrom = {"id": [[${userIdFrom}]]};
+        var data = {"text": text, "userTo": userTo, "userFrom": userFrom};
+
+        $.ajax({
+            url: "message",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function() {
+                clearMessages();
+                loadMessages();
+                $("#messageTextarea").val('');
             }
         });
     }

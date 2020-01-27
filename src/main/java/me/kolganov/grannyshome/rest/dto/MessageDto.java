@@ -27,4 +27,12 @@ public class MessageDto {
                 .userDtoTo(UserDto.toNoCommentsDto(message.getUserTo()))
                 .build();
     }
+
+    public static Message toEntity(MessageDto messageDto) {
+        return Message.builder()
+                .text(messageDto.getText())
+                .userTo(UserDto.toEntity(messageDto.getUserDtoTo()))
+                .userFrom(UserDto.toEntity(messageDto.getUserDtoFrom()))
+                .build();
+    }
 }

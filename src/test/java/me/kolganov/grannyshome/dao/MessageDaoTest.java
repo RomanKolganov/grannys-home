@@ -1,6 +1,8 @@
 package me.kolganov.grannyshome.dao;
 
 import me.kolganov.grannyshome.dao.jdbc.MessageDaoJdbcImpl;
+import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Message;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,12 @@ class MessageDaoTest {
 
     @Test
     void test() {
-        List<Message> messages = messageDaoJdbc.findAllByUserIdOneAndUserIdTwo(1L, 4L);
+        Dialog dialog = Dialog.builder()
+                .id(1L)
+                .userTo(AppUser.builder().id(1L).build())
+                .userFrom(AppUser.builder().id(4L).build())
+                .build();
+        List<Message> messages = messageDaoJdbc.findAllByDialog(dialog);
         messages.forEach(System.out::println);
     }
 }

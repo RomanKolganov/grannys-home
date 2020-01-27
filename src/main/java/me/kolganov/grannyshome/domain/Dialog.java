@@ -1,24 +1,21 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import java.util.List;
 
 @Entity
-@Table(name = "messages")
+@Table(name = "dialogs")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
+public class Dialog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "text")
-    private String text;
 
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id_to")
@@ -26,7 +23,8 @@ public class Message {
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id_from")
     private AppUser userFrom;
-    @ManyToOne(targetEntity = Dialog.class)
-    @JoinColumn(name = "dialog_id")
-    private Dialog dialog;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "dialog")
+    private List<Message> messages;
 }

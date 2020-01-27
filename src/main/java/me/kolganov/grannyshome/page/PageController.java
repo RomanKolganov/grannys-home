@@ -6,6 +6,7 @@ import me.kolganov.grannyshome.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -44,8 +45,10 @@ public class PageController {
     }
 
     @GetMapping("/chat")
-    public String getChatRoomPage(@RequestParam("id") long id, Model model, Principal principal) {
+    public String getChatRoomPage(@RequestParam("dialog_id") long dialogId,
+                                  @RequestParam("id") long id, Model model, Principal principal) {
         AppUser user = userService.getCurrentUser(principal.getName());
+        model.addAttribute("dialogId", dialogId);
         model.addAttribute("userIdTo", id);
         model.addAttribute("userIdFrom", user.getId());
         return "chatRoom";
