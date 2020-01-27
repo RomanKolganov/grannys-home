@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Message;
 
 @Data
@@ -16,6 +17,7 @@ import me.kolganov.grannyshome.domain.Message;
 public class MessageDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("text") private String text;
+    @JsonProperty("dialog_id") private long dialogId;
     @JsonProperty("userFrom") private UserDto userDtoFrom;
     @JsonProperty("userTo") private UserDto userDtoTo;
 
@@ -31,8 +33,9 @@ public class MessageDto {
     public static Message toEntity(MessageDto messageDto) {
         return Message.builder()
                 .text(messageDto.getText())
+                .dialog(Dialog.builder().id(messageDto.getDialogId()).build())
                 .userTo(UserDto.toEntity(messageDto.getUserDtoTo()))
-                .userFrom(UserDto.toEntity(messageDto.getUserDtoFrom()))
+                .userFrom(UserDto.toEntityForRegistration(messageDto.getUserDtoFrom()))
                 .build();
     }
 }

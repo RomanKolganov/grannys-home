@@ -40,7 +40,7 @@
     });
 
     function loadMessages() {
-        var url = "message/[[${dialogId}]]?userIdTo=[[${userIdTo}]]&userIdFrom=[[${userIdFrom}]]";
+        var url = "message/[[${dialogId}]]?userIdTo=[[${userIdTo}]]";
         $.ajax({
             url: url,
             type: "GET",
@@ -66,8 +66,7 @@
     function sendMessage() {
         var text = $("#messageTextarea").val();
         var userTo = {"id": [[${userIdTo}]]};
-        var userFrom = {"id": [[${userIdFrom}]]};
-        var data = {"text": text, "userTo": userTo, "userFrom": userFrom};
+        var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo};
 
         $.ajax({
             url: "message",
