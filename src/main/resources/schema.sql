@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
 CREATE TABLE IF NOT EXISTS messages (
     id bigserial,
     dialog_id bigint,
-    text varchar(500),
+    "text" varchar(500),
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
     primary key (id)
