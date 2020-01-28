@@ -1,5 +1,6 @@
 drop view if exists user_accepted_orders_view;
 drop view if exists messages_view;
+drop view if exists dialogs_view;
 drop table if exists comments;
 drop table if exists user_accepted_orders;
 drop table if exists dialogs;
@@ -34,7 +35,8 @@ CREATE TABLE IF NOT EXISTS orders (
 CREATE TABLE IF NOT EXISTS user_accepted_orders (
     id bigserial,
     accepted_user_id bigint references users (id),
-    order_id bigint references orders (id)
+    order_id bigint references orders (id),
+    primary key (id)
 );
 CREATE TABLE IF NOT EXISTS comments (
     id bigserial,
@@ -85,3 +87,10 @@ from messages m
 left join dialogs d on d.id = m.dialog_id
 left join users ut on ut.id = m.user_id_to
 left join users uf on uf.id = m.user_id_from;
+
+create or replace view dialogs_view as
+select d.id, d.user_id_to, ut.name as user_to_name,
+d.user_id_from, uf.name as user_from_name
+from dialogs d
+left join users ut on ut.id = d.user_id_to
+left join users uf on uf.id = d.user_id_from;

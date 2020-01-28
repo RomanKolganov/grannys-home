@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Dialog> getAllCurrentUserDialogs(String login) {
-        return dialogDao.findAllByUserFromLogin(login);
+        Optional<AppUser> user = userDao.findByLogin(login);
+        return user.map(dialogDao::findAllUserDialogs).orElse(null);
     }
 
     @Override
