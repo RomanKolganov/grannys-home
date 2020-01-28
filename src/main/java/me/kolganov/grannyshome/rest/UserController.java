@@ -2,6 +2,7 @@ package me.kolganov.grannyshome.rest;
 
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.rest.dto.AnimalDto;
+import me.kolganov.grannyshome.rest.dto.DialogDto;
 import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping(value = "/user/dialogs", produces = "application/json")
+    public List<DialogDto> getAllUserDialogs(Principal principal) {
+        return userService.getAllCurrentUserDialogs(principal.getName()).stream()
+                .map(DialogDto::toDto).collect(Collectors.toList());
+    }
 
     @GetMapping(value = "/user/animals", produces = "application/json")
     public List<AnimalDto> getAllUserAnimals(Principal principal) {

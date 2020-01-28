@@ -53,4 +53,9 @@ public class PageController {
         model.addAttribute("userIdFrom", user.getId());
         return "chatRoom";
     }
+
+    @GetMapping("/chats")
+    public String getChatsPage() {
+        return "chats";
+    }
 }

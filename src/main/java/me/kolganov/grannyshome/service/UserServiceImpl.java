@@ -3,8 +3,10 @@ package me.kolganov.grannyshome.service;
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.dao.AnimalDao;
 import me.kolganov.grannyshome.dao.AppUserDao;
+import me.kolganov.grannyshome.dao.DialogDao;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Role;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final AppUserDao userDao;
     private final AnimalDao animalDao;
+    private final DialogDao dialogDao;
+
+    @Override
+    public List<Dialog> getAllCurrentUserDialogs(String login) {
+        return dialogDao.findAllByUserFromLogin(login);
+    }
 
     @Override
     public List<Animal> getAllCurrentUserAnimals(String login) {
