@@ -59,7 +59,8 @@
                 {
                     "data": null,
                     render: function(data) {
-                        return '<button class="ui button" onClick=declineOrder('+data.id+');>Отказаться</button>';
+                        return  '<button class="ui button" onClick=startDialog('+data.order.user.id+');>Написать</button>'+
+                                '<button class="ui button" onClick=declineOrder('+data.id+');>Отказаться</button>';
                     }
                 }
             ],
@@ -77,6 +78,21 @@
     function declineOrder(orderId) {
         var url = "acceptedOrder/"+orderId;
         deleteEntity(url, $("#table"));
+    }
+
+    function startDialog(userId) {
+        var userTo = {"id": userId};
+        var data = {"userTo": userTo};
+        $.ajax({
+            url: "dialog",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data) {
+                var url = "/chat?dialog_id="+data.id+"&id="+data.userTo.id;
+                window.location.replace(url);
+            }
+        });
     }
 </script>
 </body>
