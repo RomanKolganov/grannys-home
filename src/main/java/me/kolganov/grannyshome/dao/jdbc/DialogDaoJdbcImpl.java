@@ -23,6 +23,16 @@ public class DialogDaoJdbcImpl implements DialogDaoJdbc {
         return jdbcTemplate.query(sql, new Object[]{appUser.getId(), appUser.getId()}, new DialogMapper());
     }
 
+    @Override
+    public Dialog findForTwoUsers(AppUser appUserOne, AppUser appUserTwo) {
+        String sql = "select * from dialogs_view " +
+                "where (user_id_to = ? and user_id_from = ?) or " +
+                "(user_id_to = ? and user_id_from = ?)";
+        return jdbcTemplate.queryForObject(
+                sql, new Object[]{appUserOne.getId(), appUserTwo.getId(),
+                        appUserTwo.getId(), appUserOne.getId()}, new DialogMapper());
+    }
+
     private static class DialogMapper implements RowMapper<Dialog> {
         @Override
         public Dialog mapRow(ResultSet resultSet, int i) throws SQLException {

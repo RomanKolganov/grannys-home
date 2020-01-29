@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DialogDaoJdbc {
     List<Dialog> findAllUserDialogs(AppUser appUser);
+    Dialog findForTwoUsers(AppUser appUserOne, AppUser appUserTwo);
 }
