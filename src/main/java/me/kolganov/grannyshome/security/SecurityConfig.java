@@ -48,6 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordParameter("worthy_password")
                     .defaultSuccessUrl("/offers").permitAll()
                 .and()
+                    .logout()
+                    .logoutSuccessUrl("/login")
+                .and()
                     .exceptionHandling().accessDeniedPage("/access_denied");
     }
 }

@@ -49,7 +49,7 @@
                 for (let i = 0; i < data.length; i++) {
                     var message =   '<div class="comment">'+
                                         '<div class="content">'+
-                                            '<a class="author">'+data[i].userFrom.name+'</a>'+
+                                            '<a class="author" href="/profile?id='+data[i].userFrom.id+'"">'+data[i].userFrom.name+'</a>'+
                                             '<div class="text">'+data[i].text+'</div>'+
                                         '</div>'+
                                     '</div>';
