@@ -17,8 +17,6 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        System.out.println("Received a new web socket connection");
-        System.out.println(event.getUser().getName());
     }
 
     @EventListener
@@ -27,12 +25,9 @@ public class WebSocketEventListener {
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
-            System.out.println("User Disconnected : " + username);
-
             MessageDto messageDto = MessageDto.builder()
                     .userDtoFrom(UserDto.builder().name(username).build())
                     .build();
-
             messagingTemplate.convertAndSend("/topic/public", messageDto);
         }
     }

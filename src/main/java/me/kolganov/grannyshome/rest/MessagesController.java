@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.rest.dto.MessageDto;
-import me.kolganov.grannyshome.rest.dto.UserDto;
 import me.kolganov.grannyshome.service.MessageService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
@@ -28,12 +30,5 @@ public class MessagesController {
                 .build();
         return messageService.getAllMessages(dialog).stream()
                 .map(MessageDto::toDto).collect(Collectors.toList());
-    }
-
-    @PostMapping("/message")
-    public void createMessage(@RequestBody MessageDto messageDto, Principal principal) {
-        UserDto userDto = UserDto.builder().login(principal.getName()).build();
-        messageDto.setUserDtoFrom(userDto);
-        messageService.save(MessageDto.toEntity(messageDto));
     }
 }
