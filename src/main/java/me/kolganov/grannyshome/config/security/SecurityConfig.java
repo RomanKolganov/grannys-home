@@ -1,4 +1,4 @@
-package me.kolganov.grannyshome.security;
+package me.kolganov.grannyshome.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

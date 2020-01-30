@@ -1,4 +1,4 @@
-package me.kolganov.grannyshome.security;
+package me.kolganov.grannyshome.config.security;
 
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.dao.AppUserDao;

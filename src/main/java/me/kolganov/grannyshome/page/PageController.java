@@ -50,7 +50,7 @@ public class PageController {
         AppUser user = userService.getCurrentUser(principal.getName());
         model.addAttribute("dialogId", dialogId);
         model.addAttribute("userIdTo", id);
-        model.addAttribute("userIdFrom", user.getId());
+        model.addAttribute("userFrom", user);
         return "chatRoom";
     }
 

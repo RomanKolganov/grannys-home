@@ -16,6 +16,8 @@
     <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
     <script src="webjars/datatables-responsive/2.2.3/js/dataTables.responsive.js"></script>
     <script src="webjars/datatables-responsive/2.2.3/js/responsive.semanticui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="js/main.js"></script>
     <title>Чат</title>
 </head>
@@ -23,20 +25,21 @@
 <div class="ui container">
     <div th:insert="~{header :: header}"></div>
     <div class="ui segment">
-        <div class="ui comments">
-            <div id="messages"></div>
-            <div class="ui reply form">
-                <div class="field">
-                    <textarea id="messageTextarea"></textarea>
-                </div>
-                <div class="ui primary submit labeled icon button" onclick="sendMessage()"><i class="icon edit"></i>Отправить</div>
-            </div>
+       <div class="ui comments">-->
+           <div id="messages"></div>
+           <div class="ui reply form">
+               <div class="field">
+                   <textarea id="messageTextarea"></textarea>
+               </div>
+               <div class="ui primary submit labeled icon button" onclick="sendMessage()"><i class="icon edit"></i>Отправить</div>
+           </div>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function() {
         loadMessages();
+        connect();
     });
 
     function loadMessages() {
@@ -45,7 +48,6 @@
             url: url,
             type: "GET",
             success: function(data) {
-                console.log(data);
                 for (let i = 0; i < data.length; i++) {
                     var message =   '<div class="comment">'+
                                         '<div class="content">'+
@@ -63,22 +65,43 @@
         $('#messages').html('');
     }
 
+    var messageArea = $('#messages');
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError);
+    }
+
+    function onConnected() {
+        stompClient.subscribe('/topic/public', onMessageReceived);
+    }
+
+    function onError() {
+        console.log("connection error");
+    }
+
     function sendMessage() {
         var text = $("#messageTextarea").val();
         var userTo = {"id": [[${userIdTo}]]};
-        var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo};
+        var userFrom = {"name": "[[${userFrom.name}]]"};
+        var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo, "userFrom": userFrom};
 
-        $.ajax({
-            url: "message",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function() {
-                clearMessages();
-                loadMessages();
-                $("#messageTextarea").val('');
-            }
-        });
+        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(data));
+        $('#messageTextarea').val('');
+    }
+
+    function onMessageReceived(payload) {
+        var data = JSON.parse(payload.body);
+        
+        var message =   '<div class="comment">'+
+                            '<div class="content">'+
+                                '<a class="author" href="/profile?id='+data.userFrom.id+'"">'+data.userFrom.name+'</a>'+
+                                '<div class="text">'+data.text+'</div>'+
+                            '</div>'+
+                        '</div>';
+        $('#messages').append(message);
     }
 </script>
 </body>
