@@ -75,7 +75,7 @@
     }
 
     function onConnected() {
-        stompClient.subscribe('/topic/public', onMessageReceived);
+        stompClient.subscribe('/topic/public/[[${dialogId}]]', onMessageReceived);
     }
 
     function onError() {
@@ -88,7 +88,7 @@
         var userFrom = {"name": "[[${userFrom.name}]]"};
         var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo, "userFrom": userFrom};
 
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(data));
+        stompClient.send("/app/chat.sendMessage/[[${dialogId}]]", {}, JSON.stringify(data));
         $('#messageTextarea').val('');
     }
 
