@@ -3,6 +3,7 @@ package me.kolganov.grannyshome.dao.jdbc;
 import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Dialog;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -25,12 +26,17 @@ public class DialogDaoJdbcImpl implements DialogDaoJdbc {
 
     @Override
     public Dialog findForTwoUsers(AppUser appUserOne, AppUser appUserTwo) {
-        String sql = "select * from dialogs_view " +
-                "where (user_id_to = ? and user_id_from = ?) or " +
-                "(user_id_to = ? and user_id_from = ?)";
-        return jdbcTemplate.queryForObject(
-                sql, new Object[]{appUserOne.getId(), appUserTwo.getId(),
-                        appUserTwo.getId(), appUserOne.getId()}, new DialogMapper());
+        try {
+            String sql = "select * from dialogs_view " +
+                    "where (user_id_to = ? and user_id_from = ?) or " +
+                    "(user_id_to = ? and user_id_from = ?)";
+            return jdbcTemplate.queryForObject(
+                    sql, new Object[]{appUserOne.getId(), appUserTwo.getId(),
+                            appUserTwo.getId(), appUserOne.getId()}, new DialogMapper());
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println(e);
+        }
+        return Dialog.builder().build();
     }
 
     private static class DialogMapper implements RowMapper<Dialog> {
