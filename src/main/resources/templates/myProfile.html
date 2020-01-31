@@ -90,6 +90,7 @@
         loadUserInfo();
 
         var table = $("#table").DataTable({
+            "searching": false,
             ajax: {
                 url: "user/animals",
                 type: "GET",

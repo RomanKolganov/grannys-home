@@ -37,6 +37,7 @@
 <script>
     $(document).ready(function() {
         var table = $("#table").DataTable({
+            "searching": false,
             ajax: {
                 url: "user/dialogs",
                 type: "GET",

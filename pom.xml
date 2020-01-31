@@ -91,12 +91,6 @@
 			<artifactId>datatables-buttons</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.webjars/datatables-rowreorder -->
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>datatables-rowreorder</artifactId>
-			<version>1.2.4</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.webjars.bower/datatables-responsive -->
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
