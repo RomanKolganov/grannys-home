@@ -21,6 +21,8 @@ CREATE TABLE users (
 CREATE TABLE IF NOT EXISTS animals (
     id bigserial,
     name varchar(250),
+    type varchar(250),
+    birthday date,
     user_id bigint references users (id),
     primary key (id)
 );

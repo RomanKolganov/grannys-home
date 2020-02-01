@@ -35,6 +35,7 @@ public class AnimalServiceImpl implements AnimalService {
         Optional<Animal> oldAnimal = animalDao.findById(animal.getId());
         oldAnimal.ifPresent(a -> {
             a.setName(animal.getName());
+            a.setType(animal.getType());
             animalDao.save(a);
         });
     }

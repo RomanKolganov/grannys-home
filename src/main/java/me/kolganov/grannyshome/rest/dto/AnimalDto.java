@@ -17,12 +17,14 @@ import me.kolganov.grannyshome.domain.AppUser;
 public class AnimalDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("name") private String name;
+    @JsonProperty("type") private String type;
     @JsonProperty("user") private UserDto userDto;
 
     public static AnimalDto toDto(Animal animal) {
         return AnimalDto.builder()
                 .id(animal.getId())
                 .name(animal.getName())
+                .type(animal.getType())
                 .build();
     }
 
@@ -30,6 +32,7 @@ public class AnimalDto {
         return Animal.builder()
                 .id(animalDto.getId())
                 .name(animalDto.getName())
+                .type(animalDto.getType())
                 .build();
     }
 
@@ -37,6 +40,7 @@ public class AnimalDto {
         return Animal.builder()
                 .id(animalDto.getId())
                 .name(animalDto.getName())
+                .type(animalDto.getType())
                 .user(AppUser.builder().login(animalDto.getUserDto().getLogin()).build())
                 .build();
     }

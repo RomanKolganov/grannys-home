@@ -47,6 +47,7 @@
             <tr>
                 <th>id</th>
                 <th>Кличка</th>
+                <th>Тип питомца</th>
                 <th></th>
             </tr>
             </thead>
@@ -60,6 +61,10 @@
             <div class="field">
                 <label>Кличка</label>
                 <input id="nameAddInput" class="nameInput" type="text" name="name" placeholder="Введите кличку питомца">
+            </div>
+            <div class="field">
+                <label>Тип питомца</label>
+                <input id="typeAddInput" class="typeInput" type="text" name="type" placeholder="Что у вас за питомец?">
             </div>
         </div>
     </div>
@@ -76,6 +81,10 @@
             <div class="field">
                 <label>Кличка</label>
                 <input id="nameUpdateInput" class="nameInput" type="text" name="name" placeholder="Введите кличку питомца">
+            </div>
+            <div class="field">
+                <label>Тип питомца</label>
+                <input id="typeUpdateInput" class="typeInput" type="text" name="type" placeholder="Что у вас за питомец?">
             </div>
         </div>
     </div>
@@ -99,13 +108,14 @@
             columns: [
                 {"data": "id"},
                 {"data": "name"},
+                {"data": "type"},
                 {
                     "data": "",
                     "render": function (data, type, row) {
                         return  '<button class="ui button" onclick=deleteEntity("animal/'+row.id+'",$("#table"));>' +
                                     '<i class="ui close icon"></i>Удалить' +
                                 '</button>' +
-                                '<button class="ui button" onclick=\'showModal('+row.id+',\"'+row.name+'\");\'>' +
+                                '<button class="ui button" onclick=\'showModal('+row.id+',\"'+row.name+'\",\"'+row.type+'\");\'>' +
                                     '<i class="ui cogs icon"></i>Ред.' +
                                 '</button>';
                     }
@@ -129,24 +139,29 @@
 
         $("#btnAdd").on("click", function () {
             var name = $("#nameAddInput").val();
+            var type = $("#typeAddInput").val();
             if (name !== "") {
                 var data = {
-                    "name": name
+                    "name": name,
+                    "type": type,
                 };
                 createEntity("animal", data, $("#table"));
                 $("#addModal").modal('hide');
-                $("#name").val("");
+                $("#nameAddInput").val("");
+                $("#typeAddInput").val("");
             }
         });
 
         $("#btnSave").on("click", function () {
             var id = $("#nameIdUpdate").val();
             var name = $("#nameUpdateInput").val();
+            var type = $("#typeUpdateInput").val();
 
             if (name !== "") {
                 var data = {
                     "id": id,
-                    "name": name
+                    "name": name,
+                    "type": type
                 };
                 updateEntity("animal", data, $("#table"));
                 $("#editModal").modal('hide');
@@ -154,9 +169,10 @@
         });
     });
 
-    function showModal(id, name, author_id, genre_id) {
+    function showModal(id, name, type) {
         $("#nameIdUpdate").val(id);
         $("#nameUpdateInput").val(name);
+        $("#typeUpdateInput").val(type);
 
         $("#editModal").modal('show');
     }
