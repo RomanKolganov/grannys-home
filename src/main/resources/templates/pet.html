@@ -27,11 +27,27 @@
         <div class="ui form">
             <div class="field">
                 <label>Кличка</label>
-                <input id="inputPetName" type="text" name="name" placeholder="Кличка питомца">
+                <input id="inputPetName" type="text" name="name" placeholder="Кличка питомца" readonly="">
+            </div>
+            <div class="field">
+                <label>Тип питомца</label>
+                <input id="inputPetType" type="text" name="type" placeholder="Тип питомца" readonly="">
             </div>
         </div>
     </div>
     <div th:insert="~{footer :: footer}"></div>
 </div>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "animal/"+[[${id}]],
+            type: "GET",
+            success: function(data) {
+                $("#inputPetName").val(data.name);
+                $("#inputPetType").val(data.type);
+            }
+        });
+    });
+</script>
 </body>
 </html>

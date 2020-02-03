@@ -64,4 +64,10 @@ public class PageController {
     public String getChatsPage() {
         return "chats";
     }
+
+    @GetMapping("/pet")
+    public String getPetPage(@RequestParam("id") long id, Model model) {
+        model.addAttribute("id", id);
+        return "pet";
+    }
 }

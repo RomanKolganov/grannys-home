@@ -13,13 +13,13 @@ spring:
     driverClassName: org.postgresql.Driver
     username: app_user
     password:
-    initialization-mode: always
+#    initialization-mode: always
 
 management:
   endpoints:
     web:
       exposure:
-        include: metrics, health, logfile, info
+        include: "*"
 
   endpoint:
     health:

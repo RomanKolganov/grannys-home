@@ -84,7 +84,12 @@
                         return '<a href="/profile?id='+data.user.id+'">'+data.user.name+'</a>';
                     }
                 },
-                {"data": "animal.name"},
+                {
+                    "data": null,
+                    render: function(data) {
+                        return '<a href="/pet?id='+data.animal.id+'">'+data.animal.name+'</a>';
+                    }
+                },
                 {
                     "data": null,
                     render: function(data) {
