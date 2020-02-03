@@ -3,9 +3,7 @@
 <body>
 <div th:fragment="header">
     <div class="ui top attached stackable container inverted menu">
-        <div class="item">
-            Granny's Home
-        </div>
+        <a class="item" href="/index">Granny's Home</a>
         <div class="ui dropdown item">
             Предложения
             <i class="dropdown icon"></i>
@@ -17,10 +15,12 @@
         <a class="item" href="/chats"><i class="comment alternate icon"></i>Сообщения</a>
         <div class="right menu">
             <a class="item" href="/my_profile"><i class="user middle aligned icon"></i>Мой профиль</a>
-            <a class="item" href="/logout">
-                <i class="logout middle aligned icon"></i>
-                Выход
-            </a>
+            <span th:if="${isLogout == true}">
+                <a class="item" href="/login"><i class="sign in alternate middle aligned icon"></i>Войти</a>
+            </span>
+            <span th:unless="${isLogout}">
+                <a class="item" href="/logout"><i class="sign out alternate middle aligned icon"></i>Выход</a>
+            </span>
         </div>
     </div>
 </div>

@@ -6,7 +6,6 @@ import me.kolganov.grannyshome.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -15,6 +14,13 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class PageController {
     private final UserService userService;
+
+    @GetMapping({"/", "/index"})
+    public String getIndexPage(Model model, Principal principal) {
+        if (principal == null)
+            model.addAttribute("isLogout", true);
+        return "index";
+    }
 
     @GetMapping("/login")
     public String getLoginPage() {

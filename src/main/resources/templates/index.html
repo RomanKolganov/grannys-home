@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,19 +17,14 @@
     <script src="webjars/datatables-responsive/2.2.3/js/dataTables.responsive.js"></script>
     <script src="webjars/datatables-responsive/2.2.3/js/responsive.semanticui.js"></script>
     <script src="js/main.js"></script>
-    <title>Питомец</title>
+    <title>Granny's Home</title>
 </head>
 <body>
 <div class="ui container">
     <div th:insert="~{header :: header}"></div>
     <div class="ui segment">
-        <h3 class="ui header">Питомец</h3>
-        <div class="ui form">
-            <div class="field">
-                <label>Кличка</label>
-                <input id="inputPetName" type="text" name="name" placeholder="Кличка питомца">
-            </div>
-        </div>
+        <h3 class="ui header">Granny's Home</h3>
+        <p>Приложение для поиска мест передержки животных</p>
     </div>
     <div th:insert="~{footer :: footer}"></div>
 </div>
