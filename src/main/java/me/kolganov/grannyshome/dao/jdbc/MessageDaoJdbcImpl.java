@@ -47,6 +47,7 @@ public class MessageDaoJdbcImpl implements MessageDaoJdbc {
                     .id(resultSet.getLong("id"))
                     .dialog(dialog)
                     .text(resultSet.getString("text"))
+                    .creationDate(resultSet.getTimestamp("creation_date"))
                     .userTo(userTo)
                     .userFrom(userFrom)
                     .build();

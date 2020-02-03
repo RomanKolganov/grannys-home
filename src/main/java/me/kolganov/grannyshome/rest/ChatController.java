@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class ChatController {
                                   @DestinationVariable("dialog_id") String dialogId,
                                   Principal principal) {
         messageDto.getUserDtoFrom().setLogin(principal.getName());
+        messageDto.setCreationDate(LocalDateTime.now());
         messageService.save(MessageDto.toEntity(messageDto));
         return messageDto;
     }

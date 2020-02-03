@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS messages (
     id bigserial,
     dialog_id bigint,
     "text" varchar(500),
+    creation_date timestamp,
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
     primary key (id)
@@ -83,7 +84,7 @@ left join users uc on uc.id = o.user_id
 left join animals a on a.id = o.animal_id;
 
 create or replace view messages_view as
-select m.id, m.text, d.id as dialog_id,
+select m.id, m.text, m.creation_date, d.id as dialog_id,
 ut.id as user_id_to, ut.name as user_name_to, ut.login as user_login_to,
 uf.id as user_id_from, uf.name as user_name_from, uf.login as user_login_from
 from messages m

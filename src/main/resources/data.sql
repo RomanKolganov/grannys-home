@@ -34,8 +34,8 @@ insert into user_roles (user_id, role_id) values (5, 1);
 insert into dialogs (user_id_to, user_id_from) values (1, 4);
 insert into dialogs (user_id_to, user_id_from) values (2, 4);
 
-insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Привет, Чувак', 1, 4);
-insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Привет, Тестовый', 4, 1);
-insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Как дела?', 1, 4);
-insert into messages (dialog_id, text, user_id_to, user_id_from) values (1, 'Нормалек, а у тебя?', 4, 1);
-insert into messages (dialog_id, text, user_id_to, user_id_from) values (2, 'Принимай заказ уже!!!', 2, 4);
+insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Привет, Чувак', to_timestamp('03.02.2019 19:28:47', 'DD.MM.YYYY HH24:MI:SS'), 1, 4);
+insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Привет, Тестовый', to_timestamp('03.02.2019 19:28:53', 'DD.MM.YYYY HH24:MI:SS'), 4, 1);
+insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Как дела?', to_timestamp('03.02.2019 19:29:02', 'DD.MM.YYYY HH24:MI:SS'), 1, 4);
+insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Нормалек, а у тебя?', to_timestamp('03.02.2019 19:29:07', 'DD.MM.YYYY HH24:MI:SS'), 4, 1);
+insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (2, 'Принимай заказ уже!!!', to_timestamp('02.02.2019 19:28:47', 'DD.MM.YYYY HH24:MI:SS'), 2, 4);

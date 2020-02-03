@@ -52,6 +52,9 @@
                     var message =   '<div class="comment">'+
                                         '<div class="content">'+
                                             '<a class="author" href="/profile?id='+data[i].userFrom.id+'"">'+data[i].userFrom.name+'</a>'+
+                                            '<div class="metadata">'+
+                                                '<span class="date">'+data[i].creation_date+'</span>'+
+                                            '</div>'+
                                             '<div class="text">'+data[i].text+'</div>'+
                                         '</div>'+
                                     '</div>';
@@ -98,6 +101,9 @@
         var message =   '<div class="comment">'+
                             '<div class="content">'+
                                 '<a class="author" href="/profile?id='+data.userFrom.id+'"">'+data.userFrom.name+'</a>'+
+                                '<div class="metadata">'+
+                                    '<span class="date">'+data.creation_date+'</span>'+
+                                '</div>'+
                                 '<div class="text">'+data.text+'</div>'+
                             '</div>'+
                         '</div>';
