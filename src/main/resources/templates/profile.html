@@ -55,6 +55,9 @@
                     var comment = '<div class="comment">'+
                                     '<div class="content">'+
                                         '<a class="author">'+data.comments[i].userFrom.name+'</a>'+
+                                        '<div class="metadata">'+
+                                            '<span class="date">'+data.comments[i].creation_date+'</span>'+
+                                        '</div>'+
                                         '<div class="text">'+data.comments[i].text+'</div>'+
                                         '<div class="actions"><a class=""delete" onClick="deleteComment('+data.comments[i].id+')">Удалить</a></div>'+
                                     '</div>'+

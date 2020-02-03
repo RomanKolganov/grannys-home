@@ -18,9 +18,9 @@ values ('Дракон', 'Обязательно заставлять летат�
 insert into user_accepted_orders (accepted_user_id, order_id) values (2, 1);
 insert into user_accepted_orders (accepted_user_id, order_id) values (1, 1);
 
-insert into comments (text, user_id_to, user_id_from) values ('Сам жрет собачий корм и не дает его собаке', 2, 1);
-insert into comments (text, user_id_to, user_id_from) values ('Исполняет на высшем уровне', 3, 2);
-insert into comments (text, user_id_to, user_id_from) values ('Погулял. Помыл. Покормил. И кота тоже.', 3, 4);
+insert into comments (text, creation_date, user_id_to, user_id_from) values ('Сам жрет собачий корм и не дает его собаке', to_timestamp('22.01.2019 23:50:47', 'DD.MM.YYYY HH24:MI:SS'), 2, 1);
+insert into comments (text, creation_date, user_id_to, user_id_from) values ('Исполняет на высшем уровне', to_timestamp('22.01.2019 23:50:47', 'DD.MM.YYYY HH24:MI:SS'), 3, 2);
+insert into comments (text, creation_date, user_id_to, user_id_from) values ('Погулял. Помыл. Покормил. И кота тоже.', to_timestamp('22.01.2019 23:50:47', 'DD.MM.YYYY HH24:MI:SS'), 3, 4);
 
 insert into roles (role) values ('USER');
 insert into roles (role) values ('ADMIN');

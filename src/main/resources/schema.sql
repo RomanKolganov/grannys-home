@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS user_accepted_orders (
 CREATE TABLE IF NOT EXISTS comments (
     id bigserial,
     text varchar(500),
+    creation_date timestamp,
     user_id_to bigint references users (id),
     user_id_from bigint references users (id),
     primary key (id)

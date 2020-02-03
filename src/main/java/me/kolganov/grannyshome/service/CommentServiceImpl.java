@@ -9,6 +9,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
         userTo.ifPresent(ut -> {
             comment.setUserTo(ut);
             userFrom.ifPresent(uf -> {
+                comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
                 comment.setUserFrom(uf);
                 commentDao.save(comment);
             });

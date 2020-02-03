@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "comments")
@@ -19,6 +21,8 @@ public class Comment {
     private Long id;
     @Column(name = "text")
     private String text;
+    @Column(name = "creation_date")
+    private Timestamp creationDate;
 
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id_to")
