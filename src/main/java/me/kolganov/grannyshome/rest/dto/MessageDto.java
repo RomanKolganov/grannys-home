@@ -24,14 +24,14 @@ public class MessageDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime creationDate;
     @JsonProperty("dialog") private DialogDto dialogDto;
-    @JsonProperty("userFrom") private UserDto userDtoFrom;
+    @JsonProperty("user") private UserDto userDto;
 
     public static MessageDto toDto(Message message) {
         return MessageDto.builder()
                 .id(message.getId())
                 .text(message.getText())
                 .creationDate(message.getCreationDate().toLocalDateTime())
-                .userDtoFrom(UserDto.toNoCommentsDto(message.getUser()))
+                .userDto(UserDto.toNoCommentsDto(message.getUser()))
                 .dialogDto(DialogDto.toDto(message.getDialog()))
                 .build();
     }
@@ -40,7 +40,7 @@ public class MessageDto {
         return Message.builder()
                 .text(messageDto.getText())
                 .creationDate(Timestamp.valueOf(messageDto.getCreationDate()))
-                .user(UserDto.toEntityForRegistration(messageDto.getUserDtoFrom()))
+                .user(UserDto.toEntityForRegistration(messageDto.getUserDto()))
                 .dialog(DialogDto.toEntity(messageDto.getDialogDto()))
                 .build();
     }

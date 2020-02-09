@@ -21,7 +21,7 @@ class MessageDaoTest {
         Dialog dialog = Dialog.builder()
                 .id(1L)
                 .userTo(AppUser.builder().id(1L).build())
-                .userFrom(AppUser.builder().id(4L).build())
+                .user(AppUser.builder().id(4L).build())
                 .build();
         List<Message> messages = messageDao.findAllByDialog(dialog);
         messages.forEach(System.out::println);

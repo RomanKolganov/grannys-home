@@ -19,14 +19,14 @@ public class DialogServiceImpl implements DialogService {
     @Override
     public Dialog create(Dialog dialog) {
         Optional<AppUser> userTo = userDao.findById(dialog.getUserTo().getId());
-        Optional<AppUser> userFrom = userDao.findByLogin(dialog.getUserFrom().getLogin());
+        Optional<AppUser> userFrom = userDao.findByLogin(dialog.getUser().getLogin());
 
         if (userTo.isPresent() && userFrom.isPresent()) {
             Dialog dialogFromDb = dialogDao.findForTwoUsers(userTo.get(), userFrom.get());
             if (dialogFromDb.getId() != 0L) {
                 return dialogFromDb;
             }
-            return dialogDao.save(Dialog.builder().userTo(userTo.get()).userFrom(userFrom.get()).build());
+            return dialogDao.save(Dialog.builder().userTo(userTo.get()).user(userFrom.get()).build());
         }
         return null;
     }

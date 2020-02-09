@@ -26,7 +26,7 @@ public class MessagesController {
         Dialog dialog = Dialog.builder()
                 .id(dialogId)
                 .userTo(AppUser.builder().id(userIdTo).build())
-                .userFrom(AppUser.builder().login(principal.getName()).build())
+                .user(AppUser.builder().login(principal.getName()).build())
                 .build();
         return messageService.getAllMessages(dialog).stream()
                 .map(MessageDto::toDto).collect(Collectors.toList());

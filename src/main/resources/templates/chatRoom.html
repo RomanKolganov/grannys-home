@@ -52,7 +52,7 @@
                 for (let i = 0; i < data.length; i++) {
                     var message =   '<div class="comment">'+
                                         '<div class="content">'+
-                                            '<a class="author" href="/profile?id='+data[i].userFrom.id+'"">'+data[i].userFrom.name+'</a>'+
+                                            '<a class="author" href="/profile?id='+data[i].user.id+'"">'+data[i].user.name+'</a>'+
                                             '<div class="metadata">'+
                                                 '<span class="date">'+data[i].creation_date+'</span>'+
                                             '</div>'+
@@ -89,8 +89,8 @@
     function sendMessage() {
         var text = $("#messageTextarea").val();
         var userTo = {"id": [[${userIdTo}]]};
-        var userFrom = {"name": "[[${userFrom.name}]]"};
-        var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo, "userFrom": userFrom};
+        var user = {"name": "[[${user.name}]]"};
+        var data = {"text": text, "dialog_id": [[${dialogId}]], "userTo": userTo, "user": user};
 
         stompClient.send("/app/chat.sendMessage/[[${dialogId}]]", {}, JSON.stringify(data));
         $('#messageTextarea').val('');
@@ -101,7 +101,7 @@
         
         var message =   '<div class="comment">'+
                             '<div class="content">'+
-                                '<a class="author" href="/profile?id='+data.userFrom.id+'"">'+data.userFrom.name+'</a>'+
+                                '<a class="author" href="/profile?id='+data.user.id+'"">'+data.user.name+'</a>'+
                                 '<div class="metadata">'+
                                     '<span class="date">'+data.creation_date+'</span>'+
                                 '</div>'+

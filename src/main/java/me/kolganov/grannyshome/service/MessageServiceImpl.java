@@ -21,9 +21,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getAllMessages(Dialog dialog) {
-        Optional<AppUser> user = userDao.findByLogin(dialog.getUserFrom().getLogin());
+        Optional<AppUser> user = userDao.findByLogin(dialog.getUser().getLogin());
         if (user.isPresent()) {
-            dialog.setUserFrom(user.get());
+            dialog.setUser(user.get());
             return messageDao.findAllByDialog(dialog);
         }
         return null;

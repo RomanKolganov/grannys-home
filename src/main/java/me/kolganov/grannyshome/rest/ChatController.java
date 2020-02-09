@@ -23,7 +23,7 @@ public class ChatController {
     public MessageDto sendMessage(@Payload MessageDto messageDto,
                                   @DestinationVariable("dialog_id") long dialogId,
                                   Principal principal) {
-        messageDto.getUserDtoFrom().setLogin(principal.getName());
+        messageDto.getUserDto().setLogin(principal.getName());
         messageDto.setCreationDate(LocalDateTime.now());
         messageDto.setDialogDto(DialogDto.builder().id(dialogId).build());
         messageService.save(MessageDto.toEntity(messageDto));

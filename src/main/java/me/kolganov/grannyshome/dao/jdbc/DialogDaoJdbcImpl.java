@@ -18,13 +18,6 @@ public class DialogDaoJdbcImpl implements DialogDaoJdbc {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Dialog> findAllUserDialogs(AppUser appUser) {
-        String sql = "select * from dialogs_view " +
-                "where user_id_to = ? or user_id_from = ?";
-        return jdbcTemplate.query(sql, new Object[]{appUser.getId(), appUser.getId()}, new DialogMapper());
-    }
-
-    @Override
     public Dialog findForTwoUsers(AppUser appUserOne, AppUser appUserTwo) {
         try {
             String sql = "select * from dialogs_view " +
@@ -53,7 +46,7 @@ public class DialogDaoJdbcImpl implements DialogDaoJdbc {
             return Dialog.builder()
                     .id(resultSet.getLong("id"))
                     .userTo(userTo)
-                    .userFrom(userFrom)
+                    .user(userFrom)
                     .build();
         }
     }

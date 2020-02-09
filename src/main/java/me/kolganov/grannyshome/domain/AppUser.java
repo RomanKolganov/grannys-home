@@ -41,11 +41,8 @@ public class AppUser {
     @OneToMany(mappedBy = "user")
     private List<Message> messages;
     @ToString.Exclude
-    @OneToMany(mappedBy = "userTo")
-    private List<Dialog> dialogTo;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userFrom")
-    private List<Dialog> dialogFrom;
+    @OneToMany(mappedBy = "user")
+    private List<Dialog> dialogs;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

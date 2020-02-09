@@ -26,7 +26,7 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
             MessageDto messageDto = MessageDto.builder()
-                    .userDtoFrom(UserDto.builder().name(username).build())
+                    .userDto(UserDto.builder().name(username).build())
                     .build();
             messagingTemplate.convertAndSend("/topic/public", messageDto);
         }
