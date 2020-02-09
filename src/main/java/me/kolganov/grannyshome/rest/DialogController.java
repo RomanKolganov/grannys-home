@@ -19,7 +19,7 @@ public class DialogController {
     @PostMapping("/dialog")
     public DialogDto createDialog(@RequestBody DialogDto dialogDto, Principal principal) {
         dialogDto.setUserDtoFrom(UserDto.builder().login(principal.getName()).build());
-        Dialog dialog = dialogService.create(DialogDto.toEntity(dialogDto));
+        Dialog dialog = dialogService.create(DialogDto.toNewEntity(dialogDto));
         return DialogDto.toDto(dialog);
     }
 }

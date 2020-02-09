@@ -31,20 +31,19 @@ public class AppUser {
     @ToString.Exclude
     @OneToMany(mappedBy = "userFrom")
     private List<Comment> commentsFrom;
+    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
     @ToString.Exclude
     @OneToMany(mappedBy = "acceptedUser")
     private List<AcceptedOrder> acceptedOrders;
     @ToString.Exclude
-    @OneToMany(mappedBy = "userTo")
-    private List<Message> messagesTo;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userFrom")
-    private List<Message> messagesFrom;
+    @OneToMany(mappedBy = "user")
+    private List<Message> messages;
     @ToString.Exclude
     @OneToMany(mappedBy = "userTo")
     private List<Dialog> dialogTo;
+    @ToString.Exclude
     @OneToMany(mappedBy = "userFrom")
     private List<Dialog> dialogFrom;
 

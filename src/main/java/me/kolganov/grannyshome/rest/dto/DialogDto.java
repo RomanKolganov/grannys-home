@@ -27,10 +27,14 @@ public class DialogDto {
                 .build();
     }
 
-    public static Dialog toEntity(DialogDto dialogDto) {
+    public static Dialog toNewEntity(DialogDto dialogDto) {
         return Dialog.builder()
                 .userTo(AppUser.builder().id(dialogDto.getUserDtoTo().getId()).build())
                 .userFrom(AppUser.builder().login(dialogDto.getUserDtoFrom().getLogin()).build())
                 .build();
+    }
+
+    public static Dialog toEntity(DialogDto dialogDto) {
+        return Dialog.builder().id(dialogDto.getId()).build();
     }
 }

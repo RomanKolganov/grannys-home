@@ -1,6 +1,5 @@
 package me.kolganov.grannyshome.dao;
 
-import me.kolganov.grannyshome.dao.jdbc.MessageDaoJdbcImpl;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Message;
@@ -15,16 +14,16 @@ import java.util.List;
 @DisplayName("Репозиторий для работы с Message ")
 class MessageDaoTest {
     @Autowired
-    private MessageDaoJdbcImpl messageDaoJdbc;
+    private MessageDao messageDao;
 
     @Test
-    void test() {
+    void test2() {
         Dialog dialog = Dialog.builder()
                 .id(1L)
                 .userTo(AppUser.builder().id(1L).build())
                 .userFrom(AppUser.builder().id(4L).build())
                 .build();
-        List<Message> messages = messageDaoJdbc.findAllByDialog(dialog);
+        List<Message> messages = messageDao.findAllByDialog(dialog);
         messages.forEach(System.out::println);
     }
 }

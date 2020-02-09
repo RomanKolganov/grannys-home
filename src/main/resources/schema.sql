@@ -60,10 +60,9 @@ CREATE TABLE IF NOT EXISTS user_roles (
 CREATE TABLE IF NOT EXISTS messages (
     id bigserial,
     dialog_id bigint,
-    "text" varchar(500),
+    text varchar(500),
     creation_date timestamp,
-    user_id_to bigint references users (id),
-    user_id_from bigint references users (id),
+    user_id bigint references users (id),
     primary key (id)
 );
 CREATE TABLE IF NOT EXISTS dialogs (
@@ -83,14 +82,14 @@ left join orders o on o.id = uao.order_id
 left join users uc on uc.id = o.user_id
 left join animals a on a.id = o.animal_id;
 
-create or replace view messages_view as
-select m.id, m.text, m.creation_date, d.id as dialog_id,
-ut.id as user_id_to, ut.name as user_name_to, ut.login as user_login_to,
-uf.id as user_id_from, uf.name as user_name_from, uf.login as user_login_from
-from messages m
-left join dialogs d on d.id = m.dialog_id
-left join users ut on ut.id = m.user_id_to
-left join users uf on uf.id = m.user_id_from;
+--create or replace view messages_view as
+--select m.id, m.text, m.creation_date, d.id as dialog_id,
+--ut.id as user_id_to, ut.name as user_name_to, ut.login as user_login_to,
+--uf.id as user_id_from, uf.name as user_name_from, uf.login as user_login_from
+--from messages m
+--left join dialogs d on d.id = m.dialog_id
+--left join users ut on ut.id = m.user_id_to
+--left join users uf on uf.id = m.user_id_from;
 
 create or replace view dialogs_view as
 select d.id, d.user_id_to, ut.name as user_to_name,

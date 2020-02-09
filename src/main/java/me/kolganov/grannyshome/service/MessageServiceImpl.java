@@ -9,7 +9,6 @@ import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Message;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +31,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void save(Message message) {
-        Optional<AppUser> userTo = userDao.findById(message.getUserTo().getId());
-        Optional<AppUser> userFrom = userDao.findByLogin(message.getUserFrom().getLogin());
+        Optional<AppUser> userFrom = userDao.findByLogin(message.getUser().getLogin());
         Optional<Dialog> dialog = dialogDao.findById(message.getDialog().getId());
 
-        if (userTo.isPresent() && userFrom.isPresent() && dialog.isPresent()) {
-            message.setUserTo(userTo.get());
-            message.setUserFrom(userFrom.get());
+        if (userFrom.isPresent() && dialog.isPresent()) {
+            message.setUser(userFrom.get());
             message.setDialog(dialog.get());
             messageDao.saveAndFlush(message);
         }
