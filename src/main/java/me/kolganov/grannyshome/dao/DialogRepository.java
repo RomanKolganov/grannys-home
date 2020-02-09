@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface DialogDao extends JpaRepository<Dialog, Long>, DialogDaoJdbc {
+public interface DialogRepository extends JpaRepository<Dialog, Long>, DialogDaoJdbc {
     List<Dialog> findAllByUserOrUserTo(AppUser user, AppUser userTo);
 }

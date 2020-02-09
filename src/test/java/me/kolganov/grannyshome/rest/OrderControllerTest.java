@@ -1,5 +1,7 @@
 package me.kolganov.grannyshome.rest;
 
+import me.kolganov.grannyshome.config.security.CustomUserDetailsService;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
@@ -29,6 +32,10 @@ class OrderControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private OrderService orderService;
+    @MockBean
+    private AppUserRepository userRepository;
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
     private static List<Order> orders = new ArrayList<>();
     private static Date date = new Date(System.currentTimeMillis());
 
@@ -52,6 +59,11 @@ class OrderControllerTest {
         orders.add(order3);
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода POST")
     void postOrderTest() throws Exception {
@@ -63,17 +75,11 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @DisplayName("должен проверять наличие метода PUT")
-    void putOrderTest() throws Exception {
-        this.mockMvc.perform(put("/order/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"title\": \"Test title 4\", \"description\": \"Test description 4\", \"date_creation\": \"2020-17-01\", " +
-                        "\"animal\": {\"id\": 2, \"name\": \"Test animal name 2\", \"quantity\": 2}, " +
-                        "\"user\": {\"id\": 2, \"name\": \"Name 2\", \"login\": \"login 2\", \"password\": \"password 2\"}}"))
-                .andExpect(status().isOk());
-    }
-
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода DELETE")
     void deleteOrderTest() throws Exception {

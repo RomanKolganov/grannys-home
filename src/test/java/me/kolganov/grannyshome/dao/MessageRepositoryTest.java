@@ -12,9 +12,9 @@ import java.util.List;
 
 @DataJpaTest
 @DisplayName("Репозиторий для работы с Message ")
-class MessageDaoTest {
+class MessageRepositoryTest {
     @Autowired
-    private MessageDao messageDao;
+    private MessageRepository messageRepository;
 
     @Test
     void test2() {
@@ -23,7 +23,7 @@ class MessageDaoTest {
                 .userTo(AppUser.builder().id(1L).build())
                 .user(AppUser.builder().id(4L).build())
                 .build();
-        List<Message> messages = messageDao.findAllByDialog(dialog);
+        List<Message> messages = messageRepository.findAllByDialog(dialog);
         messages.forEach(System.out::println);
     }
 }

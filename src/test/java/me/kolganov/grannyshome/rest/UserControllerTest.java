@@ -1,5 +1,7 @@
 package me.kolganov.grannyshome.rest;
 
+import me.kolganov.grannyshome.config.security.CustomUserDetailsService;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.service.UserService;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -26,6 +29,10 @@ class UserControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private UserService userService;
+    @MockBean
+    private AppUserRepository userRepository;
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
     private static List<AppUser> users = new ArrayList<>();
 
     @BeforeAll
@@ -39,6 +46,11 @@ class UserControllerTest {
         users.add(user3);
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода GET (one)")
     void getOneUserTest() throws Exception {
@@ -48,28 +60,31 @@ class UserControllerTest {
                 .andExpect(content().json("{'id': 2, 'name': 'Name 2', 'login': 'login 2', 'password': 'password 2'}"));
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода POST")
     void postUserTest() throws Exception {
-        this.mockMvc.perform(post("/user")
+        this.mockMvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id\": 4, \"name\": \"Name 4\", \"login\": \"login 4\", \"password\": \"password 4\"}"))
                 .andExpect(status().isOk());
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода PUT")
     void putUserTest() throws Exception {
-        this.mockMvc.perform(put("/user/1")
+        this.mockMvc.perform(put("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id\": 4, \"name\": \"New Test animal name 4\", \"quantity\": 4}"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("должен проверять наличие метода DELETE")
-    void deleteUserTest() throws Exception {
-        this.mockMvc.perform(delete("/user/1"))
                 .andExpect(status().isOk());
     }
 }

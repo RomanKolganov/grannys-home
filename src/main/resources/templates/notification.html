@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="notification">
+    <div id="badNotificationSidebar" class="ui top sidebar">
+        <div class="ui negative message">
+            <div class="header">Что-то не так</div>
+            <p>
+                Похоже, что произошла какая-то ошибка. Возможно, это косяк в приложении или
+                вы что-то делаете не так ¯\_(ツ)_/¯
+            </p>
+        </div>
+    </div>
+    <div id="goodNotificationSidebar" class="ui top sidebar">
+        <div class="ui success message">
+            <div class="header">Получилось</div>
+            <p>Мои поздравления!</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

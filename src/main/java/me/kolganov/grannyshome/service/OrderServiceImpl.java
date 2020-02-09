@@ -1,10 +1,10 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AcceptedOrderDao;
-import me.kolganov.grannyshome.dao.AnimalDao;
-import me.kolganov.grannyshome.dao.AppUserDao;
-import me.kolganov.grannyshome.dao.OrderDao;
+import me.kolganov.grannyshome.dao.AcceptedOrderRepository;
+import me.kolganov.grannyshome.dao.AnimalRepository;
+import me.kolganov.grannyshome.dao.AppUserRepository;
+import me.kolganov.grannyshome.dao.OrderRepository;
 import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
@@ -18,38 +18,38 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final OrderDao orderDao;
-    private final AppUserDao userDao;
-    private final AnimalDao animalDao;
-    private final AcceptedOrderDao acceptedOrderDao;
+    private final OrderRepository orderRepository;
+    private final AppUserRepository userDao;
+    private final AnimalRepository animalRepository;
+    private final AcceptedOrderRepository acceptedOrderRepository;
 
     @Override
     public List<Order> getAll(String login) {
-        List<AcceptedOrder> acceptedOrders = acceptedOrderDao.findByAcceptedUserLogin(login);
+        List<AcceptedOrder> acceptedOrders = acceptedOrderRepository.findByAcceptedUserLogin(login);
         if (acceptedOrders.size() == 0)
-            return orderDao.findAll();
+            return orderRepository.findAll();
 
         List<Long> idList = new ArrayList<>();
         acceptedOrders.forEach(a -> idList.add(a.getOrder().getId()));
-        return orderDao.findAllByIdNotIn(idList);
+        return orderRepository.findAllByIdNotIn(idList);
     }
 
     @Override
     public void save(Order order) {
         Optional<AppUser> user = userDao.findByLogin(order.getUser().getLogin());
-        Optional<Animal> animal = animalDao.findById(order.getAnimal().getId());
+        Optional<Animal> animal = animalRepository.findById(order.getAnimal().getId());
 
         user.ifPresent(u -> {
             order.setUser(u);
             animal.ifPresent(a -> {
                 order.setAnimal(a);
-                orderDao.save(order);
+                orderRepository.save(order);
             });
         });
     }
 
     @Override
     public void delete(long id) {
-        orderDao.deleteById(id);
+        orderRepository.deleteById(id);
     }
 }

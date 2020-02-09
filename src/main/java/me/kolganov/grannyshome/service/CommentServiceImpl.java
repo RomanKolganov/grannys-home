@@ -1,23 +1,21 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AppUserDao;
-import me.kolganov.grannyshome.dao.CommentDao;
+import me.kolganov.grannyshome.dao.AppUserRepository;
+import me.kolganov.grannyshome.dao.CommentRepository;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Comment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private final CommentDao commentDao;
-    private final AppUserDao userDao;
+    private final CommentRepository commentRepository;
+    private final AppUserRepository userDao;
 
     @Override
     public void save(Comment comment) {
@@ -29,17 +27,17 @@ public class CommentServiceImpl implements CommentService {
             userFrom.ifPresent(uf -> {
                 comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
                 comment.setUserFrom(uf);
-                commentDao.save(comment);
+                commentRepository.save(comment);
             });
         });
     }
 
     @Override
     public void delete(long id, String login) {
-        Optional<Comment> comment = commentDao.findById(id);
+        Optional<Comment> comment = commentRepository.findById(id);
         if (comment.isPresent()) {
             if (login.equals(comment.get().getUserFrom().getLogin()))
-                commentDao.deleteById(comment.get().getId());
+                commentRepository.deleteById(comment.get().getId());
             else
                 throw new AccessDeniedException("The user " + login + "have no permissions to delete comment from user " + comment.get().getUserFrom().getLogin());
         }

@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -31,7 +29,4 @@ public class Order {
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id")
     private AppUser user;
-
-    @OneToMany(mappedBy = "order")
-    private List<AcceptedOrder> acceptedOrders;
 }

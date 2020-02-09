@@ -18,15 +18,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @DisplayName("Репозиторий для работы с Order ")
-class OrderDaoTest {
+class OrderRepositoryTest {
     @Autowired
     private TestEntityManager em;
     @Autowired
-    private OrderDao orderDao;
+    private OrderRepository orderRepository;
     @Autowired
-    private AppUserDao appUserDao;
+    private AppUserRepository appUserRepository;
     @Autowired
-    private AnimalDao animalDao;
+    private AnimalRepository animalRepository;
 
     @Test
     @DisplayName("должен сохранять и получать сущность")
@@ -35,18 +35,18 @@ class OrderDaoTest {
         appUser.setName("Геральт из Ривии");
         appUser.setLogin("Butcher");
         appUser.setPassword("PlotvaTheBestHorseEver");
-        appUserDao.save(appUser);
+        appUserRepository.save(appUser);
 
         Animal animal = new Animal();
         animal.setName("Плотва");
-        animalDao.save(animal);
+        animalRepository.save(animal);
 
         Order order = new Order();
         order.setTitle("Отдам лошадь на недельку. Можно кататься!!!");
         order.setDescription("Самовывоз! С меня корм. Обязательно 2 раза в день выгуливать. Кататься осторожно.");
         order.setUser(appUser);
         order.setAnimal(animal);
-        orderDao.save(order);
+        orderRepository.save(order);
 
         Order actualOrder = em.find(Order.class, order.getId());
         assertThat(actualOrder).isNotNull()

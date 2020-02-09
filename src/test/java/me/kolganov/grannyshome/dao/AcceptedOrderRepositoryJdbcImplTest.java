@@ -11,7 +11,7 @@ import java.util.List;
 
 @DataJpaTest
 @DisplayName("Репозиторий для работы с AcceptedOrder ")
-class AcceptedOrderDaoJdbcImplTest {
+class AcceptedOrderRepositoryJdbcImplTest {
     @Autowired
     private AcceptedOrderDaoJdbcImpl daoJdbc;
 

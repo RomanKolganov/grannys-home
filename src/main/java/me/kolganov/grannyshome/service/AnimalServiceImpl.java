@@ -1,8 +1,8 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AnimalDao;
-import me.kolganov.grannyshome.dao.AppUserDao;
+import me.kolganov.grannyshome.dao.AnimalRepository;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
-    private final AnimalDao animalDao;
-    private final AppUserDao userDao;
+    private final AnimalRepository animalRepository;
+    private final AppUserRepository userDao;
 
     @Override
     public List<Animal> getAll() {
-        return animalDao.findAll();
+        return animalRepository.findAll();
     }
 
     @Override
     public Animal getOne(long id) {
-        return animalDao.findById(id).orElse(new Animal());
+        return animalRepository.findById(id).orElse(new Animal());
     }
 
     @Override
@@ -31,22 +31,22 @@ public class AnimalServiceImpl implements AnimalService {
         Optional<AppUser> user = userDao.findByLogin(animal.getUser().getLogin());
         user.ifPresent(u -> {
             animal.setUser(u);
-            animalDao.save(animal);
+            animalRepository.save(animal);
         });
     }
 
     @Override
     public void update(Animal animal) {
-        Optional<Animal> oldAnimal = animalDao.findById(animal.getId());
+        Optional<Animal> oldAnimal = animalRepository.findById(animal.getId());
         oldAnimal.ifPresent(a -> {
             a.setName(animal.getName());
             a.setType(animal.getType());
-            animalDao.save(a);
+            animalRepository.save(a);
         });
     }
 
     @Override
     public void delete(long id) {
-        animalDao.deleteById(id);
+        animalRepository.deleteById(id);
     }
 }

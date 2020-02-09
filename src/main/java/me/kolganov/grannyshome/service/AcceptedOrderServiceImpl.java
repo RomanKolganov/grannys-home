@@ -1,9 +1,9 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AcceptedOrderDao;
-import me.kolganov.grannyshome.dao.AppUserDao;
-import me.kolganov.grannyshome.dao.OrderDao;
+import me.kolganov.grannyshome.dao.AcceptedOrderRepository;
+import me.kolganov.grannyshome.dao.AppUserRepository;
+import me.kolganov.grannyshome.dao.OrderRepository;
 import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
@@ -15,30 +15,30 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AcceptedOrderServiceImpl implements AcceptedOrderService {
-    private final OrderDao orderDao;
-    private final AppUserDao userDao;
-    private final AcceptedOrderDao acceptedOrderDao;
+    private final OrderRepository orderRepository;
+    private final AppUserRepository userDao;
+    private final AcceptedOrderRepository acceptedOrderRepository;
 
     @Override
     public List<AcceptedOrder> getAllUserAcceptedOrders(String login) {
-        return acceptedOrderDao.findByAcceptedUserLogin(login);
+        return acceptedOrderRepository.findByAcceptedUserLogin(login);
     }
 
     @Override
     public void create(AcceptedOrder acceptedOrder) {
-        Optional<Order> order = orderDao.findById(acceptedOrder.getOrder().getId());
+        Optional<Order> order = orderRepository.findById(acceptedOrder.getOrder().getId());
         Optional<AppUser> user = userDao.findByLogin(acceptedOrder.getAcceptedUser().getLogin());
         order.ifPresent(o -> {
             acceptedOrder.setOrder(o);
             user.ifPresent(u -> {
                 acceptedOrder.setAcceptedUser(u);
-                acceptedOrderDao.save(acceptedOrder);
+                acceptedOrderRepository.save(acceptedOrder);
             });
         });
     }
 
     @Override
     public void delete(long id) {
-        acceptedOrderDao.deleteById(id);
+        acceptedOrderRepository.deleteById(id);
     }
 }
