@@ -54,7 +54,7 @@ public class AcceptedOrderDaoJdbcImpl implements AcceptedOrderDaoJdbc {
             return AcceptedOrder.builder()
                     .id(resultSet.getLong("id"))
                     .order(order)
-                    .acceptedUser(acceptedUser)
+                    .user(acceptedUser)
                     .build();
         }
     }

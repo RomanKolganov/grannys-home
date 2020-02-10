@@ -20,7 +20,7 @@ public class AcceptedOrder {
 
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "accepted_user_id")
-    private AppUser acceptedUser;
+    private AppUser user;
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "order_id")
     private Order order;

@@ -27,11 +27,11 @@ public class AcceptedOrderServiceImpl implements AcceptedOrderService {
     @Override
     public void create(AcceptedOrder acceptedOrder) {
         Optional<Order> order = orderRepository.findById(acceptedOrder.getOrder().getId());
-        Optional<AppUser> user = userDao.findByLogin(acceptedOrder.getAcceptedUser().getLogin());
+        Optional<AppUser> user = userDao.findByLogin(acceptedOrder.getUser().getLogin());
         order.ifPresent(o -> {
             acceptedOrder.setOrder(o);
             user.ifPresent(u -> {
-                acceptedOrder.setAcceptedUser(u);
+                acceptedOrder.setUser(u);
                 acceptedOrderRepository.save(acceptedOrder);
             });
         });

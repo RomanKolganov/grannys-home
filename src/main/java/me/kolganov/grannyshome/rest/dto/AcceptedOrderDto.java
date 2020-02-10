@@ -22,7 +22,7 @@ public class AcceptedOrderDto {
 
     public static AcceptedOrder toEntity(AcceptedOrderDto acceptedOrderDto) {
         return AcceptedOrder.builder()
-                .acceptedUser(AppUser.builder()
+                .user(AppUser.builder()
                         .login(acceptedOrderDto.getUserDto().getLogin())
                         .build())
                 .order(Order.builder().id(acceptedOrderDto.getOrderDto().getId()).build())
