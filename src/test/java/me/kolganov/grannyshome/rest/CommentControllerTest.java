@@ -60,7 +60,7 @@ class CommentControllerTest {
     void postCommentTest() throws Exception {
         this.mockMvc.perform(post("/comment")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"title\": \"Test title 4\", \"text\": \"Test text 4\", \"user\": {\"id\": 1, \"name\": \"Name 1\", \"login\": \"login 1\", \"password\": \"password 1\"}}"))
+                .content("{\"id\": 4, \"title\": \"Test title 4\", \"text\": \"Test text 4\", \"userTo\": {\"id\": 1, \"name\": \"Name 1\", \"login\": \"login 1\", \"password\": \"password 1\"}}"))
                 .andExpect(status().isOk());
     }
 
