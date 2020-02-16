@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAll(String login) {
-        List<AcceptedOrder> acceptedOrders = acceptedOrderRepository.findByAcceptedUserLogin(login);
+        List<AcceptedOrder> acceptedOrders = acceptedOrderRepository.findAllByUserLogin(login);
         if (acceptedOrders.size() == 0)
             return orderRepository.findAll();
 

@@ -21,7 +21,7 @@ public class AcceptedOrder {
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "accepted_user_id")
     private AppUser user;
-    @ManyToOne(targetEntity = AppUser.class)
+    @ManyToOne(targetEntity = Order.class)
     @JoinColumn(name = "order_id")
     private Order order;
 }

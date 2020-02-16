@@ -21,7 +21,7 @@ public class AcceptedOrderServiceImpl implements AcceptedOrderService {
 
     @Override
     public List<AcceptedOrder> getAllUserAcceptedOrders(String login) {
-        return acceptedOrderRepository.findByAcceptedUserLogin(login);
+        return acceptedOrderRepository.findAllByUserLogin(login);
     }
 
     @Override
