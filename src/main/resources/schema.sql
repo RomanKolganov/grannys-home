@@ -71,17 +71,6 @@ CREATE TABLE IF NOT EXISTS messages (
     user_id bigint references users (id),
     primary key (id)
 );
-CREATE OR REPLACE view user_accepted_orders_view as
-select uao.id, ua.id as accepted_user_id, ua.login as accepted_user_login, ua.name as accepted_user_name,
-o.id as order_id, o.title, o.description,
-uc.id as created_user_id, uc.name as created_user_name,
-a.id as animal_id, a.name as animal_name
-from user_accepted_orders uao
-left join users ua on ua.id = uao.accepted_user_id
-left join orders o on o.id = uao.order_id
-left join users uc on uc.id = o.user_id
-left join animals a on a.id = o.animal_id;
-
 create or replace view dialogs_view as
 select d.id, d.user_id_to, ut.name as user_to_name,
 d.user_id_from, uf.name as user_from_name
