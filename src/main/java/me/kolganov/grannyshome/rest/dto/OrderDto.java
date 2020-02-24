@@ -44,4 +44,8 @@ public class OrderDto {
                 .user(UserDto.toEntity(orderDto.getUserDto()))
                 .build();
     }
+
+    public static Order toJustOrderEntity(OrderDto orderDto) {
+        return Order.builder().id(orderDto.getId()).build();
+    }
 }

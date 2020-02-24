@@ -1,11 +1,9 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -31,4 +29,8 @@ public class Order {
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id")
     private AppUser user;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "order")
+    private List<AcceptedOrder> acceptedOrders;
 }

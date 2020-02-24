@@ -18,10 +18,10 @@ public class AcceptedOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(targetEntity = AppUser.class)
+    @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "accepted_user_id")
     private AppUser user;
-    @OneToOne(targetEntity = Order.class)
+    @ManyToOne(targetEntity = Order.class)
     @JoinColumn(name = "order_id")
     private Order order;
 }

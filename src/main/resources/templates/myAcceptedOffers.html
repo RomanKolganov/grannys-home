@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="webjars/Semantic-UI/2.4.1/semantic.css" rel="stylesheet">
+    <link href="webjars/datatables/1.10.20/css/dataTables.semanticui.css" rel="stylesheet">
+    <link href="webjars/datatables-buttons/1.6.1/css/buttons.semanticui.css" rel="stylesheet">
+    <link href="css/responsive.semanticui.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="webjars/Semantic-UI/2.4.1/semantic.js"></script>
+    <script src="webjars/datatables/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="webjars/datatables/1.10.20/js/dataTables.semanticui.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/dataTables.buttons.js"></script>
+    <script src="webjars/datatables-buttons/1.6.1/js/buttons.semanticui.js"></script>
+    <script src="webjars/datatables-responsive/2.2.3/js/dataTables.responsive.js"></script>
+    <script src="webjars/datatables-responsive/2.2.3/js/responsive.semanticui.js"></script>
+    <script src="js/main.js"></script>
+    <title>Мои Предложения</title>
+</head>
+<body>
+<div class="ui container">
+    <div th:insert="~{header :: header}"></div>
+    <div class="ui segment">
+        <table id="table" class="ui celled table responsive nowrap unstackable" width="100%">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Заказ</th>
+                <th>Описание</th>
+                <th>Пользователь</th>
+                <th>Питомец</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div th:insert="~{footer :: footer}"></div>
+    <div th:insert="~{notification :: notification}"></div>
+</div>
+<script>
+    $(document).ready(function() {
+        var table = $("#table").DataTable({
+            "searching": false,
+            ajax: {
+                url: "myAcceptedOrder",
+                type: "GET",
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "id"},
+                {"data": "order.title"},
+                {"data": "order.description"},
+                {
+                    "data": null,
+                    render: function(data) {
+                        return '<a href="/profile?id='+data.user.id+'">'+data.user.name+'</a>';
+                    }
+                },
+                {"data": "order.animal.name"},
+                {
+                    "data": null,
+                    render: function(data) {
+                        return  '<button class="ui button" onClick=confirmOrder('+data.order.id+');>Подтвердить</button>'+
+                                '<button class="ui button" onClick=declineOrder('+data.id+','+data.user.id+');>Отказать</button>';
+                    }
+                }
+            ],
+            columnDefs: [
+                {"targets": [0], "visible": false, "searchable": false},
+                {responsivePriority: 0, targets: 1},
+                {responsivePriority: 2, targets: 3},
+                {responsivePriority: 3, targets: 4},
+                {responsivePriority: 1, targets: -1}
+            ],
+            lengthChange: false
+        });
+    });
+
+    function declineOrder(orderId, userId) {
+        var url = "acceptedOrder/"+orderId+"/"+userId;
+        deleteEntity(url, $("#table"));
+    }
+
+    function confirmOrder(orderId) {
+        var data = {"id": orderId};
+        $.ajax({
+            url: "order/"+orderId,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data) {
+                $('#goodNotificationSidebar').sidebar('toggle');
+            }
+        });
+    }
+</script>
+</body>
+</html>

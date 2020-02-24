@@ -30,7 +30,7 @@ public class OrderController {
     public void updateOrder(@PathVariable("id") long id,
                             @RequestBody OrderDto orderDto) {
         orderDto.setId(id);
-        orderService.update(OrderDto.toEntity(orderDto));
+        orderService.update(OrderDto.toJustOrderEntity(orderDto));
     }
 
     @DeleteMapping("/order/{id}")

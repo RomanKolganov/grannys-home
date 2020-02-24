@@ -27,12 +27,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAll(String login) {
         List<AcceptedOrder> acceptedOrders = acceptedOrderRepository.findAllByUserLogin(login);
-        if (acceptedOrders.size() == 0)
-            return orderRepository.findAll();
+        if (acceptedOrders.size() == 0) {
+            List<Order> orders = orderRepository.findAll();
+            orders.removeIf(o -> !OrderStatus.NEW.name().equals(o.getStatus()));
+            return orders;
+        }
 
         List<Long> idList = new ArrayList<>();
         acceptedOrders.forEach(a -> idList.add(a.getOrder().getId()));
-        return orderRepository.findAllByStatusAndIdNotIn(OrderStatus.NEW.name(), idList);
+        List<Order> orders = orderRepository.findAllByIdNotIn(idList);
+        orders.removeIf(o -> !OrderStatus.NEW.name().equals(o.getStatus()));
+        System.out.println(orders);
+        return orders;
     }
 
     @Override

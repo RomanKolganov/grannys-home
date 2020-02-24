@@ -32,6 +32,11 @@ public class PageController {
         return "acceptedOffers";
     }
 
+    @GetMapping("/myAcceptedOffers")
+    public String getMyAcceptedOffersPage() {
+        return "myAcceptedOffers";
+    }
+
     @GetMapping("/my_profile")
     public String getMyProfilePage() {
         return "myProfile";

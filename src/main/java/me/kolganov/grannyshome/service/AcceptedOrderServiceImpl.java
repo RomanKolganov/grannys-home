@@ -9,6 +9,7 @@ import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,18 +17,31 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AcceptedOrderServiceImpl implements AcceptedOrderService {
     private final OrderRepository orderRepository;
-    private final AppUserRepository userDao;
+    private final AppUserRepository userRepository;
     private final AcceptedOrderRepository acceptedOrderRepository;
 
     @Override
-    public List<AcceptedOrder> getAllUserAcceptedOrders(String login) {
+    public List<AcceptedOrder> getAllCurrentUserAcceptedOrders(String login) {
         return acceptedOrderRepository.findAllByUserLogin(login);
+    }
+
+    @Override
+    public List<AcceptedOrder> getAllUserAcceptedOrders(String login) {
+        Optional<AppUser> user = userRepository.findByLogin(login);
+        List<AcceptedOrder> acceptedOrders = new ArrayList<>();
+
+        if (user.isPresent()) {
+            List<Order> orders = user.get().getCreatedOrders();
+            orders.forEach(o -> acceptedOrders.addAll(o.getAcceptedOrders()));
+            return acceptedOrders;
+        }
+        return null;
     }
 
     @Override
     public void create(AcceptedOrder acceptedOrder) {
         Optional<Order> order = orderRepository.findById(acceptedOrder.getOrder().getId());
-        Optional<AppUser> user = userDao.findByLogin(acceptedOrder.getUser().getLogin());
+        Optional<AppUser> user = userRepository.findByLogin(acceptedOrder.getUser().getLogin());
         order.ifPresent(o -> {
             acceptedOrder.setOrder(o);
             user.ifPresent(u -> {
@@ -40,5 +54,11 @@ public class AcceptedOrderServiceImpl implements AcceptedOrderService {
     @Override
     public void delete(long id) {
         acceptedOrderRepository.deleteById(id);
+    }
+
+    @Override
+    public void delete(long id, long userId) {
+        Optional<AppUser> user = userRepository.findById(userId);
+        user.ifPresent(u -> acceptedOrderRepository.deleteByIdAndUser(id, u));
     }
 }

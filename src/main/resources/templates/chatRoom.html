@@ -32,7 +32,6 @@
                    <textarea id="messageTextarea"></textarea>
                </div>
                <div class="ui primary submit labeled icon button" onclick="sendMessage()"><i class="icon edit"></i>Отправить</div>
-               <div class="ui secondary button" onclick="makeADeal()"><i class="clipboard list icon"></i>Предложить сделку</div>
            </div>
         </div>
     </div>
@@ -110,20 +109,6 @@
                             '</div>'+
                         '</div>';
         $('#messages').append(message);
-    }
-
-    function makeADeal() {
-        var data = {};
-
-        $.ajax({
-            url: "",
-            type: "POST",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(data) {
-                console.log("ok");
-            }
-        });
     }
 </script>
 </body>

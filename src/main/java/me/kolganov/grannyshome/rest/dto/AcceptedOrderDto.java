@@ -32,6 +32,7 @@ public class AcceptedOrderDto {
     public static AcceptedOrderDto toDto(AcceptedOrder acceptedOrder) {
         return AcceptedOrderDto.builder()
                 .id(acceptedOrder.getId())
+                .userDto(UserDto.toNoCommentsDto(acceptedOrder.getUser()))
                 .orderDto(OrderDto.toDto(acceptedOrder.getOrder()))
                 .build();
     }
