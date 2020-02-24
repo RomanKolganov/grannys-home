@@ -9,6 +9,7 @@ import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
+import me.kolganov.grannyshome.domain.enumeration.OrderStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<Long> idList = new ArrayList<>();
         acceptedOrders.forEach(a -> idList.add(a.getOrder().getId()));
-        return orderRepository.findAllByIdNotIn(idList);
+        return orderRepository.findAllByStatusAndIdNotIn(OrderStatus.NEW.name(), idList);
     }
 
     @Override
@@ -41,10 +42,20 @@ public class OrderServiceImpl implements OrderService {
 
         user.ifPresent(u -> {
             order.setUser(u);
+            order.setStatus(OrderStatus.NEW.name());
             animal.ifPresent(a -> {
                 order.setAnimal(a);
                 orderRepository.save(order);
             });
+        });
+    }
+
+    @Override
+    public void update(Order order) {
+        Optional<Order> orderFromDB = orderRepository.findById(order.getId());
+        orderFromDB.ifPresent(o -> {
+            o.setStatus(OrderStatus.CONFIRMED.name());
+            orderRepository.save(o);
         });
     }
 

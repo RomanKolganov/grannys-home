@@ -1,5 +1,3 @@
-drop view if exists user_accepted_orders_view;
-drop view if exists messages_view;
 drop view if exists dialogs_view;
 drop table if exists comments;
 drop table if exists user_accepted_orders;
@@ -30,6 +28,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id bigserial,
     title varchar(150),
     description varchar(1000),
+    status varchar (150),
     user_id bigint references users (id),
     animal_id bigint references animals (id),
     primary key (id)

@@ -8,5 +8,6 @@ import java.util.List;
 public interface OrderService {
     List<Order> getAll(String login);
     void save(Order order);
+    void update(Order order);
     void delete(long id);
 }

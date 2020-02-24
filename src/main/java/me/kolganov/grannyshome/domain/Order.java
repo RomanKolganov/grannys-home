@@ -21,6 +21,8 @@ public class Order {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "status")
+    private String status;
 
     @OneToOne
     @JoinColumn(name = "animal_id", referencedColumnName = "id")

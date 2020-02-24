@@ -26,6 +26,13 @@ public class OrderController {
         orderService.save(OrderDto.toEntity(orderDto));
     }
 
+    @PutMapping("order/{id}")
+    public void updateOrder(@PathVariable("id") long id,
+                            @RequestBody OrderDto orderDto) {
+        orderDto.setId(id);
+        orderService.update(OrderDto.toEntity(orderDto));
+    }
+
     @DeleteMapping("/order/{id}")
     public void deleteOrder(@PathVariable("id") long id) {
         orderService.delete(id);
