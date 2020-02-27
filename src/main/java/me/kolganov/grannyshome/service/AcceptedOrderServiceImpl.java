@@ -7,7 +7,9 @@ import me.kolganov.grannyshome.dao.OrderRepository;
 import me.kolganov.grannyshome.domain.AcceptedOrder;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Order;
+import me.kolganov.grannyshome.domain.enumeration.OrderStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +58,24 @@ public class AcceptedOrderServiceImpl implements AcceptedOrderService {
         acceptedOrderRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void delete(long id, long userId) {
         Optional<AppUser> user = userRepository.findById(userId);
         user.ifPresent(u -> acceptedOrderRepository.deleteByIdAndUser(id, u));
+    }
+
+    @Transactional
+    @Override
+    public void confirm(long orderId, long userId) {
+        Optional<Order> orderFromDB = orderRepository.findById(orderId);
+        orderFromDB.ifPresent(o -> {
+            Optional<AppUser> user = userRepository.findById(userId);
+            user.ifPresent(u -> {
+                acceptedOrderRepository.deleteAllByOrderAndUserNot(o, u);
+                o.setStatus(OrderStatus.CONFIRMED.name());
+                orderRepository.save(o);
+            });
+        });
     }
 }

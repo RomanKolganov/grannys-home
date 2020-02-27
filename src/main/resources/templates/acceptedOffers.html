@@ -61,8 +61,15 @@
                 {
                     "data": null,
                     render: function(data) {
-                        return  '<button class="ui button" onClick=startDialog('+data.order.user.id+');>Написать</button>'+
-                                '<button class="ui button" onClick=declineOrder('+data.id+');>Отказаться</button>';
+                        var btnWrite = '<button class="ui button" onClick=startDialog('+data.order.user.id+');>Написать</button>';
+                        var btnDeclineDisabled = '<button class="ui button" disabled onClick=declineOrder('+data.id+');>Отказаться</button>';
+                        var btnDeclineEnabled = '<button class="ui button" onClick=declineOrder('+data.id+');>Отказаться</button>';
+
+                        if (data.order.status !== "NEW") {
+                            return btnWrite + btnDeclineDisabled;
+                        } else {
+                            return btnWrite + btnDeclineEnabled;
+                        }    
                     }
                 }
             ],

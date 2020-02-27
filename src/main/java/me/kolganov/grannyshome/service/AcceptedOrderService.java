@@ -10,4 +10,5 @@ public interface AcceptedOrderService {
     void create(AcceptedOrder acceptedOrder);
     void delete(long id);
     void delete(long id, long userId);
+    void confirm(long orderId, long userId);
 }

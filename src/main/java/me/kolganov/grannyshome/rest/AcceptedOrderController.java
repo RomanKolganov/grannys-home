@@ -30,7 +30,7 @@ public class AcceptedOrderController {
     @DeleteMapping("/acceptedOrder/{id}/{userId}")
     public void declineOrderByUser(@PathVariable("id") long id,
                                    @PathVariable("userId") long userId) {
-        acceptedOrderService.delete(id);
+        acceptedOrderService.delete(id, userId);
     }
 
     @GetMapping("/acceptedOrder")
@@ -43,5 +43,11 @@ public class AcceptedOrderController {
     public List<AcceptedOrderDto> getUserAcceptedOrders(Principal principal) {
         return acceptedOrderService.getAllUserAcceptedOrders(principal.getName()).stream()
                 .map(AcceptedOrderDto::toDto).collect(Collectors.toList());
+    }
+
+    @PutMapping("/acceptedOrder/{orderId}/{userId}")
+    public void confirmOrder(@PathVariable("orderId") long orderId,
+                             @PathVariable("userId") long userId) {
+        acceptedOrderService.confirm(orderId, userId);
     }
 }

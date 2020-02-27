@@ -37,7 +37,6 @@ public class OrderServiceImpl implements OrderService {
         acceptedOrders.forEach(a -> idList.add(a.getOrder().getId()));
         List<Order> orders = orderRepository.findAllByIdNotIn(idList);
         orders.removeIf(o -> !OrderStatus.NEW.name().equals(o.getStatus()));
-        System.out.println(orders);
         return orders;
     }
 
@@ -53,15 +52,6 @@ public class OrderServiceImpl implements OrderService {
                 order.setAnimal(a);
                 orderRepository.save(order);
             });
-        });
-    }
-
-    @Override
-    public void update(Order order) {
-        Optional<Order> orderFromDB = orderRepository.findById(order.getId());
-        orderFromDB.ifPresent(o -> {
-            o.setStatus(OrderStatus.CONFIRMED.name());
-            orderRepository.save(o);
         });
     }
 
