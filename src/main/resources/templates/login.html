@@ -78,6 +78,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{notification :: notification}"></div>
 <script>
     function registration() {
         var data = {
@@ -90,7 +91,15 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function(data) {
-                console.log(data);
+                if (data) {
+                    $('#goodNotificationSidebar').sidebar('toggle');
+                    $("#login").val('');
+                    $("#password").val('');
+                    $(".ui.styled.accordion > .title").removeClass('active');
+                    $(".ui.styled.accordion > .content").removeClass('active');
+                } else {
+                    $('#badNotificationSidebar').sidebar('toggle');
+                }
             }
         });
     }

@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.User;
 public class DialogDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("userTo") private UserDto userDtoTo;
-    @JsonProperty("userFrom") private UserDto userDtoFrom;
+    @JsonProperty("user") private UserDto userDto;
 
     public static DialogDto toDto(Dialog dialog) {
         return DialogDto.builder()
@@ -27,10 +27,14 @@ public class DialogDto {
                 .build();
     }
 
-    public static Dialog toEntity(DialogDto dialogDto) {
+    public static Dialog toNewEntity(DialogDto dialogDto) {
         return Dialog.builder()
                 .userTo(AppUser.builder().id(dialogDto.getUserDtoTo().getId()).build())
-                .userFrom(AppUser.builder().login(dialogDto.getUserDtoFrom().getLogin()).build())
+                .user(AppUser.builder().login(dialogDto.getUserDto().getLogin()).build())
                 .build();
+    }
+
+    public static Dialog toEntity(DialogDto dialogDto) {
+        return Dialog.builder().id(dialogDto.getId()).build();
     }
 }

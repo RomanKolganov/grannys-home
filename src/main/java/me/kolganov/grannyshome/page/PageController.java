@@ -32,6 +32,11 @@ public class PageController {
         return "acceptedOffers";
     }
 
+    @GetMapping("/myAcceptedOffers")
+    public String getMyAcceptedOffersPage() {
+        return "myAcceptedOffers";
+    }
+
     @GetMapping("/my_profile")
     public String getMyProfilePage() {
         return "myProfile";
@@ -56,7 +61,7 @@ public class PageController {
         AppUser user = userService.getCurrentUser(principal.getName());
         model.addAttribute("dialogId", dialogId);
         model.addAttribute("userIdTo", id);
-        model.addAttribute("userFrom", user);
+        model.addAttribute("user", user);
         return "chatRoom";
     }
 

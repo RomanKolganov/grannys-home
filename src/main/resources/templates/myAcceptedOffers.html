@@ -17,7 +17,7 @@
     <script src="webjars/datatables-responsive/2.2.3/js/dataTables.responsive.js"></script>
     <script src="webjars/datatables-responsive/2.2.3/js/responsive.semanticui.js"></script>
     <script src="js/main.js"></script>
-    <title>Принятые предложения</title>
+    <title>Мои Предложения</title>
 </head>
 <body>
 <div class="ui container">
@@ -37,13 +37,14 @@
         </table>
     </div>
     <div th:insert="~{footer :: footer}"></div>
+    <div th:insert="~{notification :: notification}"></div>
 </div>
 <script>
     $(document).ready(function() {
         var table = $("#table").DataTable({
             "searching": false,
             ajax: {
-                url: "acceptedOrder",
+                url: "myAcceptedOrder",
                 type: "GET",
                 dataSrc: ""
             },
@@ -54,22 +55,15 @@
                 {
                     "data": null,
                     render: function(data) {
-                        return '<a href="/profile?id='+data.order.user.id+'">'+data.order.user.name+'</a>';
+                        return '<a href="/profile?id='+data.user.id+'">'+data.user.name+'</a>';
                     }
                 },
                 {"data": "order.animal.name"},
                 {
                     "data": null,
                     render: function(data) {
-                        var btnWrite = '<button class="ui button" onClick=startDialog('+data.order.user.id+');>Написать</button>';
-                        var btnDeclineDisabled = '<button class="ui button" disabled onClick=declineOrder('+data.id+');>Отказаться</button>';
-                        var btnDeclineEnabled = '<button class="ui button" onClick=declineOrder('+data.id+');>Отказаться</button>';
-
-                        if (data.order.status !== "NEW") {
-                            return btnWrite + btnDeclineDisabled;
-                        } else {
-                            return btnWrite + btnDeclineEnabled;
-                        }    
+                        return  '<button class="ui button" onClick=confirmOrder('+data.order.id+','+data.user.id+');>Подтвердить</button>'+
+                                '<button class="ui button" onClick=declineOrder('+data.id+','+data.user.id+');>Отказать</button>';
                     }
                 }
             ],
@@ -84,22 +78,22 @@
         });
     });
 
-    function declineOrder(orderId) {
-        var url = "acceptedOrder/"+orderId;
+    function declineOrder(orderId, userId) {
+        var url = "acceptedOrder/"+orderId+"/"+userId;
         deleteEntity(url, $("#table"));
     }
 
-    function startDialog(userId) {
-        var userTo = {"id": userId};
-        var data = {"userTo": userTo};
+    function confirmOrder(orderId, userId) {
+        var data = {"id": orderId};
+        var url = "acceptedOrder/"+orderId+"/"+userId;
         $.ajax({
-            url: "dialog",
-            type: "POST",
+            url: url,
+            type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function(data) {
-                var url = "/chat?dialog_id="+data.id+"&id="+data.userTo.id;
-                window.location.replace(url);
+                $("#table").DataTable().ajax.reload();
+                $('#goodNotificationSidebar').sidebar('toggle');
             }
         });
     }

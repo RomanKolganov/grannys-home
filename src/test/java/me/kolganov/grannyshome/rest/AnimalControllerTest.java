@@ -1,5 +1,7 @@
 package me.kolganov.grannyshome.rest;
 
+import me.kolganov.grannyshome.config.security.CustomUserDetailsService;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.service.AnimalService;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -26,19 +29,28 @@ class AnimalControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private AnimalService animalService;
+    @MockBean
+    private AppUserRepository userRepository;
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
     private static List<Animal> animals = new ArrayList<>();
 
     @BeforeAll
     static void fillAnimals() {
-        Animal animal1 = Animal.builder().id(1L).name("Test animal name 1").build();
-        Animal animal2 = Animal.builder().id(2L).name("Test animal name 2").build();
-        Animal animal3 = Animal.builder().id(3L).name("Test animal name 3").build();
+        Animal animal1 = Animal.builder().id(1L).name("Test animal name 1").type("type1").build();
+        Animal animal2 = Animal.builder().id(2L).name("Test animal name 2").type("type2").build();
+        Animal animal3 = Animal.builder().id(3L).name("Test animal name 3").type("type3").build();
 
         animals.add(animal1);
         animals.add(animal2);
         animals.add(animal3);
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода GET (all)")
     void getAnimalsListTest() throws Exception {
@@ -46,27 +58,42 @@ class AnimalControllerTest {
 
         this.mockMvc.perform(get("/animal"))
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1, 'name': 'Test animal name 1', 'quantity': 1}, {'id': 2, 'name': 'Test animal name 2', 'quantity': 2}, {'id': 3, 'name': 'Test animal name 3', 'quantity': 3}]"));
+                .andExpect(content().json("[{'id': 1, 'name': 'Test animal name 1', 'type': type1}, {'id': 2, 'name': 'Test animal name 2', 'type': type2}, {'id': 3, 'name': 'Test animal name 3', 'type': type3}]"));
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода POST")
     void postAnimalTest() throws Exception {
         this.mockMvc.perform(post("/animal")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"name\": \"Test animal name 4\", \"quantity\": 4}"))
+                .content("{\"id\": 4, \"name\": \"Test animal name 4\", \"type\": \"type4\"}"))
                 .andExpect(status().isOk());
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода PUT")
     void putAnimalTest() throws Exception {
-        this.mockMvc.perform(put("/animal/1")
+        this.mockMvc.perform(put("/animal")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"name\": \"New Test animal name 4\", \"quantity\": 4}"))
+                .content("{\"id\": 4, \"name\": \"New Test animal name 4\", \"type\": \"type4\"}"))
                 .andExpect(status().isOk());
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода DELETE")
     void deleteAnimalTest() throws Exception {

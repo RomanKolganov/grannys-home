@@ -8,12 +8,12 @@ insert into animals (name, type, user_id) values ('Нана', 'Собака', 4)
 insert into animals (name, type, user_id) values ('Дракоша', 'Домашний дракон', 4);
 insert into animals (name, type, user_id) values ('Фландерс', 'Аквариумная рыбка', 1);
 
-insert into orders (title, description, animal_id, user_id)
-values ('Выгул собаки', 'Гулять 2 раза в день. Кормить после каждой прогулки', 1, 4);
-insert into orders (title, description, animal_id, user_id)
-values ('Отдам рыбок', 'Ничего не надо, просто сыпь корм иногда.', 3, 3);
-insert into orders (title, description, animal_id, user_id)
-values ('Дракон', 'Обязательно заставлять летать хотя бы раз в день. Еду он найдет сам. Ни в коем случае не пытаться украсть его сокровища!!!', 2, 4);
+insert into orders (title, description, status, animal_id, user_id)
+values ('Выгул собаки', 'Гулять 2 раза в день. Кормить после каждой прогулки', 'NEW', 1, 4);
+insert into orders (title, description, status, animal_id, user_id)
+values ('Отдам рыбок', 'Ничего не надо, просто сыпь корм иногда.', 'NEW', 3, 3);
+insert into orders (title, description, status, animal_id, user_id)
+values ('Дракон', 'Обязательно заставлять летать хотя бы раз в день. Еду он найдет сам. Ни в коем случае не пытаться украсть его сокровища!!!', 'NEW', 2, 4);
 
 insert into user_accepted_orders (accepted_user_id, order_id) values (2, 1);
 insert into user_accepted_orders (accepted_user_id, order_id) values (1, 1);
@@ -32,10 +32,8 @@ insert into user_roles (user_id, role_id) values (4, 1);
 insert into user_roles (user_id, role_id) values (5, 1);
 
 insert into dialogs (user_id_to, user_id_from) values (1, 4);
-insert into dialogs (user_id_to, user_id_from) values (2, 4);
 
-insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Привет, Чувак', to_timestamp('03.02.2019 19:28:47', 'DD.MM.YYYY HH24:MI:SS'), 1, 4);
-insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Привет, Тестовый', to_timestamp('03.02.2019 19:28:53', 'DD.MM.YYYY HH24:MI:SS'), 4, 1);
-insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Как дела?', to_timestamp('03.02.2019 19:29:02', 'DD.MM.YYYY HH24:MI:SS'), 1, 4);
-insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (1, 'Нормалек, а у тебя?', to_timestamp('03.02.2019 19:29:07', 'DD.MM.YYYY HH24:MI:SS'), 4, 1);
-insert into messages (dialog_id, text, creation_date, user_id_to, user_id_from) values (2, 'Принимай заказ уже!!!', to_timestamp('02.02.2019 19:28:47', 'DD.MM.YYYY HH24:MI:SS'), 2, 4);
+insert into messages (dialog_id, text, creation_date, user_id) values (1, 'Привет, Чувак', to_timestamp('03.02.2019 19:28:47', 'DD.MM.YYYY HH24:MI:SS'), 4);
+insert into messages (dialog_id, text, creation_date, user_id) values (1, 'Привет, Тестовый', to_timestamp('03.02.2019 19:28:53', 'DD.MM.YYYY HH24:MI:SS'), 1);
+insert into messages (dialog_id, text, creation_date, user_id) values (1, 'Как дела?', to_timestamp('03.02.2019 19:29:02', 'DD.MM.YYYY HH24:MI:SS'), 4);
+insert into messages (dialog_id, text, creation_date, user_id) values (1, 'Нормалек, а у тебя?', to_timestamp('03.02.2019 19:29:07', 'DD.MM.YYYY HH24:MI:SS'), 1);

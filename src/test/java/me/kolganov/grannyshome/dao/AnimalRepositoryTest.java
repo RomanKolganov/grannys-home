@@ -11,18 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @DisplayName("Репозиторий для работы с Animal ")
-class AnimalDaoTest {
+class AnimalRepositoryTest {
     @Autowired
     private TestEntityManager em;
     @Autowired
-    private AnimalDao animalDao;
+    private AnimalRepository animalRepository;
 
     @Test
     @DisplayName("должен сохранять и получать сущность")
     void saveAndFindTest() {
         Animal animal = new Animal();
         animal.setName("Нана");
-        animalDao.save(animal);
+        animalRepository.save(animal);
 
         Animal actualAnimal = em.find(Animal.class, animal.getId());
         assertThat(actualAnimal).isNotNull()

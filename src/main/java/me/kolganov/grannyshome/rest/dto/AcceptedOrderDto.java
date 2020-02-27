@@ -22,7 +22,7 @@ public class AcceptedOrderDto {
 
     public static AcceptedOrder toEntity(AcceptedOrderDto acceptedOrderDto) {
         return AcceptedOrder.builder()
-                .acceptedUser(AppUser.builder()
+                .user(AppUser.builder()
                         .login(acceptedOrderDto.getUserDto().getLogin())
                         .build())
                 .order(Order.builder().id(acceptedOrderDto.getOrderDto().getId()).build())
@@ -32,6 +32,7 @@ public class AcceptedOrderDto {
     public static AcceptedOrderDto toDto(AcceptedOrder acceptedOrder) {
         return AcceptedOrderDto.builder()
                 .id(acceptedOrder.getId())
+                .userDto(UserDto.toNoCommentsDto(acceptedOrder.getUser()))
                 .orderDto(OrderDto.toDto(acceptedOrder.getOrder()))
                 .build();
     }

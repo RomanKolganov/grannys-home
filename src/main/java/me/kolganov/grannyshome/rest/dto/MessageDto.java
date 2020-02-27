@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.kolganov.grannyshome.domain.Dialog;
 import me.kolganov.grannyshome.domain.Message;
 
 import java.sql.Timestamp;
@@ -24,17 +23,16 @@ public class MessageDto {
     @JsonProperty("creation_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime creationDate;
-    @JsonProperty("dialog_id") private long dialogId;
-    @JsonProperty("userFrom") private UserDto userDtoFrom;
-    @JsonProperty("userTo") private UserDto userDtoTo;
+    @JsonProperty("dialog") private DialogDto dialogDto;
+    @JsonProperty("user") private UserDto userDto;
 
     public static MessageDto toDto(Message message) {
         return MessageDto.builder()
                 .id(message.getId())
                 .text(message.getText())
                 .creationDate(message.getCreationDate().toLocalDateTime())
-                .userDtoFrom(UserDto.toNoCommentsDto(message.getUserFrom()))
-                .userDtoTo(UserDto.toNoCommentsDto(message.getUserTo()))
+                .userDto(UserDto.toNoCommentsDto(message.getUser()))
+                .dialogDto(DialogDto.toDto(message.getDialog()))
                 .build();
     }
 
@@ -42,9 +40,8 @@ public class MessageDto {
         return Message.builder()
                 .text(messageDto.getText())
                 .creationDate(Timestamp.valueOf(messageDto.getCreationDate()))
-                .dialog(Dialog.builder().id(messageDto.getDialogId()).build())
-                .userTo(UserDto.toEntity(messageDto.getUserDtoTo()))
-                .userFrom(UserDto.toEntityForRegistration(messageDto.getUserDtoFrom()))
+                .user(UserDto.toEntityForRegistration(messageDto.getUserDto()))
+                .dialog(DialogDto.toEntity(messageDto.getDialogDto()))
                 .build();
     }
 }

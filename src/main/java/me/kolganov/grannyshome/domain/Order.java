@@ -1,12 +1,8 @@
 package me.kolganov.grannyshome.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -23,6 +19,8 @@ public class Order {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "status")
+    private String status;
 
     @OneToOne
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
@@ -32,6 +30,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private AppUser user;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "order")
     private List<AcceptedOrder> acceptedOrders;
 }

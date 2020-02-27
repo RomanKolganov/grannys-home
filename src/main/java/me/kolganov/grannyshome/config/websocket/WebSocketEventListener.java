@@ -1,8 +1,8 @@
 package me.kolganov.grannyshome.config.websocket;
 
+import lombok.RequiredArgsConstructor;
 import me.kolganov.grannyshome.rest.dto.MessageDto;
 import me.kolganov.grannyshome.rest.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -11,9 +11,9 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Component
+@RequiredArgsConstructor
 public class WebSocketEventListener {
-    @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -26,7 +26,7 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
             MessageDto messageDto = MessageDto.builder()
-                    .userDtoFrom(UserDto.builder().name(username).build())
+                    .userDto(UserDto.builder().name(username).build())
                     .build();
             messagingTemplate.convertAndSend("/topic/public", messageDto);
         }

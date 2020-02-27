@@ -2,7 +2,6 @@ package me.kolganov.grannyshome.service;
 
 import me.kolganov.grannyshome.domain.Order;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface OrderService {

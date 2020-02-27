@@ -29,24 +29,8 @@ public class AppUser {
     @OneToMany(mappedBy = "userTo")
     private List<Comment> commentsTo;
     @ToString.Exclude
-    @OneToMany(mappedBy = "userFrom")
-    private List<Comment> commentsFrom;
     @OneToMany(mappedBy = "user")
     private List<Animal> animals;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "acceptedUser")
-    private List<AcceptedOrder> acceptedOrders;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userTo")
-    private List<Message> messagesTo;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userFrom")
-    private List<Message> messagesFrom;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userTo")
-    private List<Dialog> dialogTo;
-    @OneToMany(mappedBy = "userFrom")
-    private List<Dialog> dialogFrom;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

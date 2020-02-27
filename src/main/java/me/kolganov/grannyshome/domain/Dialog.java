@@ -22,7 +22,7 @@ public class Dialog {
     private AppUser userTo;
     @ManyToOne(targetEntity = AppUser.class)
     @JoinColumn(name = "user_id_from")
-    private AppUser userFrom;
+    private AppUser user;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "dialog")

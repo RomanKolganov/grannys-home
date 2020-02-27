@@ -1,6 +1,7 @@
 package me.kolganov.grannyshome.dao;
 
 import me.kolganov.grannyshome.domain.AppUser;
+import me.kolganov.grannyshome.domain.Comment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@DisplayName("Репозиторий для работы с AppUser ")
-class AppUserDaoTest {
+@DisplayName("Репозиторий для работы с Comment ")
+class CommentRepositoryTest {
     @Autowired
     private TestEntityManager em;
     @Autowired
-    private AppUserDao appUserDao;
+    private CommentRepository commentRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Test
     @DisplayName("должен сохранять и получать сущность")
@@ -24,12 +27,16 @@ class AppUserDaoTest {
         appUser.setName("Геральт из Ривии");
         appUser.setLogin("Butcher");
         appUser.setPassword("PlotvaTheBestHorseEver");
-        appUserDao.save(appUser);
+        appUserRepository.save(appUser);
 
-        AppUser actualAppUser = em.find(AppUser.class, appUser.getId());
-        assertThat(actualAppUser).isNotNull()
-                .matches(s -> s.getName().equals(appUser.getName()))
-                .matches(s -> s.getLogin().equals(appUser.getLogin()))
-                .matches(s -> s.getPassword().equals(appUser.getPassword()));
+        Comment comment = new Comment();
+        comment.setText("Заставляет шевелиться любую лошадь");
+        comment.setUserTo(appUser);
+        commentRepository.save(comment);
+
+        Comment actualComment = em.find(Comment.class, comment.getId());
+        assertThat(actualComment).isNotNull()
+                .matches(s -> s.getText().equals(comment.getText()))
+                .matches(s -> s.getUserTo().getId().equals(appUser.getId()));
     }
 }

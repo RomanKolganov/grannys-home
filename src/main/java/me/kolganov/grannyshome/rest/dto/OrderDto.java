@@ -19,6 +19,7 @@ public class OrderDto {
     @JsonProperty("id") private Long id;
     @JsonProperty("title") private String title;
     @JsonProperty("description") private String description;
+    @JsonProperty("status") private String status;
     @JsonProperty("animal") private AnimalDto animalDto;
     @JsonProperty("user") private UserDto userDto;
 
@@ -27,6 +28,7 @@ public class OrderDto {
                 .id(order.getId())
                 .title(order.getTitle())
                 .description(order.getDescription())
+                .status(order.getStatus())
                 .animalDto(AnimalDto.toDto(order.getAnimal()))
                 .userDto(UserDto.toNoCommentsDto(order.getUser()))
                 .build();
@@ -37,9 +39,13 @@ public class OrderDto {
                 .id(orderDto.getId())
                 .title(orderDto.getTitle())
                 .description(orderDto.getDescription())
+                .status(orderDto.getStatus())
                 .animal(AnimalDto.toEntity(orderDto.getAnimalDto()))
                 .user(UserDto.toEntity(orderDto.getUserDto()))
                 .build();
+    }
 
+    public static Order toJustOrderEntity(OrderDto orderDto) {
+        return Order.builder().id(orderDto.getId()).build();
     }
 }

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AnimalDao extends JpaRepository<Animal, Long> {
+public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Animal> findByUserLogin(String login);
 }

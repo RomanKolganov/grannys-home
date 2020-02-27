@@ -1,9 +1,9 @@
 package me.kolganov.grannyshome.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AnimalDao;
-import me.kolganov.grannyshome.dao.AppUserDao;
-import me.kolganov.grannyshome.dao.DialogDao;
+import me.kolganov.grannyshome.dao.AnimalRepository;
+import me.kolganov.grannyshome.dao.AppUserRepository;
+import me.kolganov.grannyshome.dao.DialogRepository;
 import me.kolganov.grannyshome.domain.Animal;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Dialog;
@@ -19,19 +19,19 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final AppUserDao userDao;
-    private final AnimalDao animalDao;
-    private final DialogDao dialogDao;
+    private final AppUserRepository userDao;
+    private final AnimalRepository animalRepository;
+    private final DialogRepository dialogRepository;
 
     @Override
     public List<Dialog> getAllCurrentUserDialogs(String login) {
         Optional<AppUser> user = userDao.findByLogin(login);
-        return user.map(dialogDao::findAllUserDialogs).orElse(null);
+        return user.map(appUser -> dialogRepository.findAllByUserOrUserTo(appUser, appUser)).orElse(null);
     }
 
     @Override
     public List<Animal> getAllCurrentUserAnimals(String login) {
-        return animalDao.findByUserLogin(login);
+        return animalRepository.findByUserLogin(login);
     }
 
     @Override
@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(Collections.singletonList(Role.builder().id(1L).build()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setName(user.getLogin());
         AppUser savedUser = userDao.save(user);
         System.out.println(savedUser);
         return true;

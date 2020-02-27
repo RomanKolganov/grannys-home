@@ -24,11 +24,8 @@ public class Message {
     private Timestamp creationDate;
 
     @ManyToOne(targetEntity = AppUser.class)
-    @JoinColumn(name = "user_id_to")
-    private AppUser userTo;
-    @ManyToOne(targetEntity = AppUser.class)
-    @JoinColumn(name = "user_id_from")
-    private AppUser userFrom;
+    @JoinColumn(name = "user_id")
+    private AppUser user;
     @ManyToOne(targetEntity = Dialog.class)
     @JoinColumn(name = "dialog_id")
     private Dialog dialog;

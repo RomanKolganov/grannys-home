@@ -1,7 +1,7 @@
 package me.kolganov.grannyshome.config.security;
 
 import lombok.RequiredArgsConstructor;
-import me.kolganov.grannyshome.dao.AppUserDao;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.Role;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final AppUserDao userDao;
+    private final AppUserRepository userDao;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {

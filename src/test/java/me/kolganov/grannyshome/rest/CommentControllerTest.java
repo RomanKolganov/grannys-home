@@ -1,5 +1,7 @@
 package me.kolganov.grannyshome.rest;
 
+import me.kolganov.grannyshome.config.security.CustomUserDetailsService;
+import me.kolganov.grannyshome.dao.AppUserRepository;
 import me.kolganov.grannyshome.domain.AppUser;
 import me.kolganov.grannyshome.domain.Comment;
 import me.kolganov.grannyshome.service.CommentService;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -27,6 +30,10 @@ class CommentControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private CommentService commentService;
+    @MockBean
+    private AppUserRepository userRepository;
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
     private static List<Comment> comments = new ArrayList<>();
 
     @BeforeAll
@@ -43,24 +50,25 @@ class CommentControllerTest {
         comments.add(comment3);
     }
 
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода POST")
     void postCommentTest() throws Exception {
         this.mockMvc.perform(post("/comment")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"title\": \"Test title 4\", \"text\": \"Test text 4\", \"user\": {\"id\": 1, \"name\": \"Name 1\", \"login\": \"login 1\", \"password\": \"password 1\"}}"))
+                .content("{\"id\": 4, \"title\": \"Test title 4\", \"text\": \"Test text 4\", \"userTo\": {\"id\": 1, \"name\": \"Name 1\", \"login\": \"login 1\", \"password\": \"password 1\"}}"))
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @DisplayName("должен проверять наличие метода PUT")
-    void putCommentTest() throws Exception {
-        this.mockMvc.perform(put("/comment/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 4, \"title\": \"Test title 4\", \"text\": \"Test text 4\", \"user\": {\"id\": 1, \"name\": \"Name 1\", \"login\": \"login 1\", \"password\": \"password 1\"}}"))
-                .andExpect(status().isOk());
-    }
-
+    @WithMockUser(
+            username = "test",
+            password = "test",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     @DisplayName("должен проверять наличие метода DELETE")
     void deleteCommentTest() throws Exception {
